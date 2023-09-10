@@ -1,4 +1,4 @@
-import 'package:star_wars/constans/colors.dart' as AppColors;
+import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

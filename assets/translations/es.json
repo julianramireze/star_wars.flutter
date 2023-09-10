@@ -3,5 +3,11 @@
   "close_app": "Cerrar aplicación",
   "want_close_app": "¿Quieres cerrar la aplicación?",
   "cancel": "Cancelar",
-  "accept": "Aceptar"
+  "accept": "Aceptar",
+  "reports": "Reportes",
+  "favorites": "Favoritos",
+  "without_internet": "Sin Internet",
+  "again_with_internet": "Nuevamente con Internet",
+  "hello": "Hola",
+  "welcome_back": "Bienvenid@ de nuevo"
 }

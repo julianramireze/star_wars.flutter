@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:star_wars/config/api.dart';
-import 'package:star_wars/constans/assets.dart';
-import 'package:star_wars/constans/colors.dart' as AppColors;
+import 'package:star_wars/constants/assets.dart';
+import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';

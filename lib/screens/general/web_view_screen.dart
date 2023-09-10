@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:star_wars/constans/assets.dart';
+import 'package:star_wars/constants/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
-import 'package:star_wars/constans/colors.dart' as AppColors;
+import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:lottie/lottie.dart';
 
 class WebViewScreen extends HookWidget {

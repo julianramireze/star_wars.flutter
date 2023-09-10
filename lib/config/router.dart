@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:star_wars/constans/routes.dart';
+import 'package:star_wars/constants/routes.dart';
+import 'package:star_wars/screens/general/settings_screen.dart';
 import 'package:star_wars/screens/general/web_view_screen.dart';
 import 'package:star_wars/screens/splash_screen.dart';
+import 'package:star_wars/screens/main/main_screen.dart';
 import 'package:star_wars/utils/ui/modals.dart';
 
 class Router {
@@ -21,11 +23,26 @@ class Router {
 
   static void setupRouter() {
     fluroRouter.define(Routes.splash.toString(), handler: _splashScreenHandler);
+    fluroRouter.define(Routes.main.toString(), handler: _mainScreenHandler);
+    fluroRouter.define(Routes.settings.toString(),
+        handler: _settingsScreenHandler);
+    fluroRouter.define(Routes.webview.toString(),
+        handler: _webviewScreenHandler);
   }
 
   static final _splashScreenHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
     return const SplashScreen();
+  });
+
+  static final _mainScreenHandler = Handler(
+      handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+    return MainScreen();
+  });
+
+  static final _settingsScreenHandler = Handler(
+      handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+    return const SettingsScreen();
   });
 
   static final _webviewScreenHandler = Handler(
