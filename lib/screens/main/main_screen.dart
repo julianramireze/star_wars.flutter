@@ -110,10 +110,10 @@ class MainScreen extends HookWidget {
                                   },
                                   padding: const EdgeInsets.all(0),
                                   borderRadius: BorderRadius.circular(100),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.settings_rounded,
                                     color: AppColors.Colors.blue,
-                                    size: 26,
+                                    size: 25,
                                   )),
                             ],
                           )
