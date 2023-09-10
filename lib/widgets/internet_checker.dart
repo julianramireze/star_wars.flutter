@@ -43,15 +43,17 @@ class InternetChecker extends HookWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                  tr(connectivityStatus.value != "none"
-                      ? "again_with_internet"
-                      : "without_internet"),
-                  style: TextStyle(
-                      color: connectivityStatus.value != "none"
-                          ? Colors.green
-                          : Colors.redAccent,
-                      fontSize: 11))
+              Material(
+                  color: Colors.transparent,
+                  child: Text(
+                      tr(connectivityStatus.value != "none"
+                          ? "again_with_internet"
+                          : "without_internet"),
+                      style: TextStyle(
+                          color: connectivityStatus.value != "none"
+                              ? Colors.green
+                              : Colors.redAccent,
+                          fontSize: 11)))
             ],
           ),
         )
