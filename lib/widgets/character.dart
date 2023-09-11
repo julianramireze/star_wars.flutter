@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/stores/character.dart';
+import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/config/router.dart' as AppRouter;
@@ -22,22 +23,25 @@ class Gender {
 
   Gender({required this.gender, required this.color});
 
-  static Gender StringToGender(String gender) {
+  static Gender StringToGender(String gender, bool darkMode) {
     late Gender finalGender;
 
     if (gender == GenderType.male.name) {
-      finalGender =
-          Gender(gender: GenderType.male.name, color: Colors.greenAccent);
+      finalGender = Gender(
+          gender: GenderType.male.name,
+          color: darkMode ? Colors.greenAccent : Colors.green[700]!);
     } else if (gender == GenderType.female.name) {
-      finalGender =
-          Gender(gender: GenderType.female.name, color: Colors.pinkAccent);
+      finalGender = Gender(
+          gender: GenderType.female.name,
+          color: darkMode ? Colors.pinkAccent : Colors.pink[700]!);
     } else if (gender == GenderType.hermaphrodite.name) {
       finalGender = Gender(
           gender: GenderType.hermaphrodite.name,
-          color: Colors.deepPurpleAccent);
+          color: darkMode ? Colors.purpleAccent : Colors.purple[700]!);
     } else {
-      finalGender =
-          Gender(gender: GenderType.unknown.name, color: Colors.orangeAccent);
+      finalGender = Gender(
+          gender: GenderType.unknown.name,
+          color: darkMode ? Colors.orangeAccent : Colors.orange[700]!);
     }
 
     return finalGender;
@@ -58,9 +62,11 @@ class Character extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsStore = Provider.of<SettingsStore>(context);
     final characterStore = Provider.of<CharacterStore>(context);
 
-    Gender gender = Gender.StringToGender(character.gender);
+    Gender gender =
+        Gender.StringToGender(character.gender, settingsStore.darkMode);
 
     return CustomButton(
         borderRadius: BorderRadius.circular(5),
