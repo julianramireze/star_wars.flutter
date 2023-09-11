@@ -3,19 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 
 const ColorScheme colorSchemeDark = ColorScheme(
-  onPrimary: AppColors.Colors.blue,
   primary: AppColors.Colors.blue,
-  primaryContainer: AppColors.Colors.blueLight,
-  onSecondary: AppColors.Colors.steelBlue,
+  onPrimary: AppColors.Colors.blueLight,
+  inversePrimary: AppColors.Colors.blueDark,
   secondary: AppColors.Colors.steelBlue,
-  secondaryContainer: AppColors.Colors.steelBlueLight,
-  onBackground: AppColors.Colors.black,
-  onError: Colors.redAccent,
-  error: Colors.redAccent,
-  onSurface: AppColors.Colors.black,
-  surface: AppColors.Colors.black,
+  onSecondary: AppColors.Colors.steelBlueLight,
+  surface: AppColors.Colors.blue,
+  onSurface: AppColors.Colors.white,
   background: AppColors.Colors.black,
-  brightness: Brightness.dark,
+  onBackground: AppColors.Colors.gray,
+  error: Colors.redAccent,
+  onError: Colors.redAccent,
+  brightness: Brightness.light,
 );
 
 var themeDark = ThemeData(

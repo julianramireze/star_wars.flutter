@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const ColorScheme colorSchemeDark = ColorScheme(
-  onPrimary: AppColors.Colors.blue,
   primary: AppColors.Colors.blue,
-  primaryContainer: AppColors.Colors.blueLight,
-  onSecondary: AppColors.Colors.steelBlue,
+  onPrimary: AppColors.Colors.blueLight,
+  inversePrimary: AppColors.Colors.blueDark,
   secondary: AppColors.Colors.steelBlue,
-  secondaryContainer: AppColors.Colors.steelBlueLight,
-  onBackground: AppColors.Colors.white,
-  onError: Colors.redAccent,
-  error: Colors.redAccent,
+  onSecondary: AppColors.Colors.steelBlueLight,
+  surface: AppColors.Colors.blue,
   onSurface: AppColors.Colors.black,
-  surface: AppColors.Colors.black,
-  background: AppColors.Colors.black,
-  brightness: Brightness.dark,
+  background: AppColors.Colors.white,
+  onBackground: AppColors.Colors.gray,
+  error: Colors.redAccent,
+  onError: Colors.redAccent,
+  brightness: Brightness.light,
 );
 
 var themeLight = ThemeData(
