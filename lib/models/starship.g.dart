@@ -1,0 +1,34 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'starship.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+StarShip _$StarShipFromJson(Map<String, dynamic> json) => StarShip()
+  ..name = json['name'] as String
+  ..model = json['model'] as String
+  ..manufacturer = json['manufacturer'] as String
+  ..costInCredits = const JsonStringToInt().fromJson(json['cost_in_credits'])
+  ..length = (json['length'] as num).toDouble()
+  ..maxAtmospheringSpeed =
+      const JsonStringToInt().fromJson(json['max_atmosphering_speed'])
+  ..cargoCapacity = const JsonStringToInt().fromJson(json['cargo_capacity'])
+  ..starshipClass = json['starship_class'] as String
+  ..created = DateTime.parse(json['created'] as String)
+  ..edited = DateTime.parse(json['edited'] as String);
+
+Map<String, dynamic> _$StarShipToJson(StarShip instance) => <String, dynamic>{
+      'name': instance.name,
+      'model': instance.model,
+      'manufacturer': instance.manufacturer,
+      'cost_in_credits': const JsonStringToInt().toJson(instance.costInCredits),
+      'length': instance.length,
+      'max_atmosphering_speed':
+          const JsonStringToInt().toJson(instance.maxAtmospheringSpeed),
+      'cargo_capacity': const JsonStringToInt().toJson(instance.cargoCapacity),
+      'starship_class': instance.starshipClass,
+      'created': instance.created.toIso8601String(),
+      'edited': instance.edited.toIso8601String(),
+    };

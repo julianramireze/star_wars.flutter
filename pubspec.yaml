@@ -26,11 +26,11 @@ dependencies:
   lottie: ^1.4.2
   google_fonts: ^4.0.3
   dio: ^5.1.1
-  realm: ^1.0.3
   json_annotation: ^4.8.1
   rflutter_alert: ^2.0.4
   styled_text: ^5.1.0
   connectivity_plus: ^3.0.4
+  objectbox: ^2.2.1
 
 dev_dependencies:
   flutter_test:
