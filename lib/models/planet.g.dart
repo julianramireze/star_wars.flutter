@@ -6,7 +6,7 @@ part of 'planet.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Planet _$PlanetFromJson(Map<String, dynamic> json) => Planet()
+PlanetModel _$PlanetModelFromJson(Map<String, dynamic> json) => PlanetModel()
   ..name = json['name'] as String
   ..rotationPeriod = const JsonStringToInt().fromJson(json['rotation_period'])
   ..orbitalPeriod = const JsonStringToInt().fromJson(json['orbital_period'])
@@ -16,7 +16,8 @@ Planet _$PlanetFromJson(Map<String, dynamic> json) => Planet()
   ..created = DateTime.parse(json['created'] as String)
   ..edited = DateTime.parse(json['edited'] as String);
 
-Map<String, dynamic> _$PlanetToJson(Planet instance) => <String, dynamic>{
+Map<String, dynamic> _$PlanetModelToJson(PlanetModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'rotation_period':
           const JsonStringToInt().toJson(instance.rotationPeriod),

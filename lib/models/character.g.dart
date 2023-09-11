@@ -6,23 +6,25 @@ part of 'character.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Character _$CharacterFromJson(Map<String, dynamic> json) => Character()
-  ..name = json['name'] as String
-  ..height = const JsonStringToInt().fromJson(json['height'])
-  ..mass = const JsonStringToInt().fromJson(json['mass'])
-  ..hairColor = json['hair_color'] as String
-  ..eyeColor = json['eye_color'] as String
-  ..gender = json['gender'] as String
-  ..birthYear = json['birth_year'] as String
-  ..homeWorld = json['homeworld'] as String
-  ..starShips =
-      (json['starships'] as List<dynamic>).map((e) => e as String).toList()
-  ..vehicles =
-      (json['vehicles'] as List<dynamic>).map((e) => e as String).toList()
-  ..created = DateTime.parse(json['created'] as String)
-  ..edited = DateTime.parse(json['edited'] as String);
+CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
+    CharacterModel()
+      ..name = json['name'] as String
+      ..height = const JsonStringToInt().fromJson(json['height'])
+      ..mass = const JsonStringToInt().fromJson(json['mass'])
+      ..hairColor = json['hair_color'] as String
+      ..eyeColor = json['eye_color'] as String
+      ..gender = json['gender'] as String
+      ..birthYear = json['birth_year'] as String
+      ..homeWorld = json['homeworld'] as String
+      ..starShips =
+          (json['starships'] as List<dynamic>).map((e) => e as String).toList()
+      ..vehicles =
+          (json['vehicles'] as List<dynamic>).map((e) => e as String).toList()
+      ..created = DateTime.parse(json['created'] as String)
+      ..edited = DateTime.parse(json['edited'] as String);
 
-Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
+Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'height': const JsonStringToInt().toJson(instance.height),
       'mass': const JsonStringToInt().toJson(instance.mass),

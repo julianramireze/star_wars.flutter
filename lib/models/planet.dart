@@ -6,7 +6,7 @@ part 'planet.g.dart';
 @Entity()
 @JsonSerializable()
 @JsonStringToInt()
-class Planet {
+class PlanetModel {
   @JsonKey(name: 'name')
   late String name;
 
@@ -31,7 +31,8 @@ class Planet {
   @JsonKey(name: 'edited')
   late DateTime edited;
 
-  static Planet fromJson(Map<String, dynamic> json) => _$PlanetFromJson(json);
+  static PlanetModel fromJson(Map<String, dynamic> json) =>
+      _$PlanetModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PlanetToJson(this);
+  Map<String, dynamic> toJson() => _$PlanetModelToJson(this);
 }

@@ -6,7 +6,7 @@ part 'character.g.dart';
 @Entity()
 @JsonSerializable()
 @JsonStringToInt()
-class Character {
+class CharacterModel {
   @JsonKey(name: 'name')
   late String name;
 
@@ -43,8 +43,8 @@ class Character {
   @JsonKey(name: 'edited')
   late DateTime edited;
 
-  static Character fromJson(Map<String, dynamic> json) =>
-      _$CharacterFromJson(json);
+  static CharacterModel fromJson(Map<String, dynamic> json) =>
+      _$CharacterModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CharacterToJson(this);
+  Map<String, dynamic> toJson() => _$CharacterModelToJson(this);
 }

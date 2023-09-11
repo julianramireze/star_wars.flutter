@@ -6,20 +6,23 @@ part of 'starship.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-StarShip _$StarShipFromJson(Map<String, dynamic> json) => StarShip()
-  ..name = json['name'] as String
-  ..model = json['model'] as String
-  ..manufacturer = json['manufacturer'] as String
-  ..costInCredits = const JsonStringToInt().fromJson(json['cost_in_credits'])
-  ..length = (json['length'] as num).toDouble()
-  ..maxAtmospheringSpeed =
-      const JsonStringToInt().fromJson(json['max_atmosphering_speed'])
-  ..cargoCapacity = const JsonStringToInt().fromJson(json['cargo_capacity'])
-  ..starshipClass = json['starship_class'] as String
-  ..created = DateTime.parse(json['created'] as String)
-  ..edited = DateTime.parse(json['edited'] as String);
+StarShipModel _$StarShipModelFromJson(Map<String, dynamic> json) =>
+    StarShipModel()
+      ..name = json['name'] as String
+      ..model = json['model'] as String
+      ..manufacturer = json['manufacturer'] as String
+      ..costInCredits =
+          const JsonStringToInt().fromJson(json['cost_in_credits'])
+      ..length = (json['length'] as num).toDouble()
+      ..maxAtmospheringSpeed =
+          const JsonStringToInt().fromJson(json['max_atmosphering_speed'])
+      ..cargoCapacity = const JsonStringToInt().fromJson(json['cargo_capacity'])
+      ..starshipClass = json['starship_class'] as String
+      ..created = DateTime.parse(json['created'] as String)
+      ..edited = DateTime.parse(json['edited'] as String);
 
-Map<String, dynamic> _$StarShipToJson(StarShip instance) => <String, dynamic>{
+Map<String, dynamic> _$StarShipModelToJson(StarShipModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'model': instance.model,
       'manufacturer': instance.manufacturer,

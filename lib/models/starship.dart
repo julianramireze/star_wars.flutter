@@ -6,7 +6,7 @@ part 'starship.g.dart';
 @Entity()
 @JsonSerializable()
 @JsonStringToInt()
-class StarShip {
+class StarShipModel {
   @JsonKey(name: 'name')
   late String name;
 
@@ -37,8 +37,8 @@ class StarShip {
   @JsonKey(name: 'edited')
   late DateTime edited;
 
-  static StarShip fromJson(Map<String, dynamic> json) =>
-      _$StarShipFromJson(json);
+  static StarShipModel fromJson(Map<String, dynamic> json) =>
+      _$StarShipModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$StarShipToJson(this);
+  Map<String, dynamic> toJson() => _$StarShipModelToJson(this);
 }

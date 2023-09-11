@@ -6,7 +6,7 @@ part 'vehicle.g.dart';
 @Entity()
 @JsonSerializable()
 @JsonStringToInt()
-class Vehicle {
+class VehicleModel {
   @JsonKey(name: 'name')
   late String name;
 
@@ -37,7 +37,8 @@ class Vehicle {
   @JsonKey(name: 'edited')
   late DateTime edited;
 
-  static Vehicle fromJson(Map<String, dynamic> json) => _$VehicleFromJson(json);
+  static VehicleModel fromJson(Map<String, dynamic> json) =>
+      _$VehicleModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$VehicleToJson(this);
+  Map<String, dynamic> toJson() => _$VehicleModelToJson(this);
 }
