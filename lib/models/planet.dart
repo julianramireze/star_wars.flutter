@@ -7,6 +7,10 @@ part 'planet.g.dart';
 @JsonSerializable()
 @JsonStringToInt()
 class PlanetModel {
+  @Id()
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  late int id;
+
   @JsonKey(name: 'name')
   late String name;
 

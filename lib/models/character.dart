@@ -7,6 +7,10 @@ part 'character.g.dart';
 @JsonSerializable()
 @JsonStringToInt()
 class CharacterModel {
+  @Id()
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  late int id;
+
   @JsonKey(name: 'name')
   late String name;
 

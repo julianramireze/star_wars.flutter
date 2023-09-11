@@ -7,6 +7,10 @@ part 'starship.g.dart';
 @JsonSerializable()
 @JsonStringToInt()
 class StarShipModel {
+  @Id()
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  late int id;
+
   @JsonKey(name: 'name')
   late String name;
 
