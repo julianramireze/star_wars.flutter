@@ -13,7 +13,7 @@ import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/stores/starship.dart';
 import 'package:star_wars/stores/vehicle.dart';
-import 'package:star_wars/utils/ui/helpers/hooks.dart';
+import 'package:star_wars/utils/helpers/hooks.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
 
 class SplashScreen extends HookWidget {

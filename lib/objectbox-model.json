@@ -1,0 +1,294 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "2:5029412464357566523",
+      "lastPropertyId": "9:5134351306106596944",
+      "name": "PlanetModel",
+      "properties": [
+        {
+          "id": "1:4687713521830833413",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4511376838143339366",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1563589824100228716",
+          "name": "rotationPeriod",
+          "type": 6
+        },
+        {
+          "id": "4:7467089019858994334",
+          "name": "orbitalPeriod",
+          "type": 6
+        },
+        {
+          "id": "5:7550726107927975761",
+          "name": "diameter",
+          "type": 6
+        },
+        {
+          "id": "6:4850117635136588916",
+          "name": "climate",
+          "type": 9
+        },
+        {
+          "id": "7:6672201215364537444",
+          "name": "terrain",
+          "type": 9
+        },
+        {
+          "id": "8:3156505835040373040",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "9:5134351306106596944",
+          "name": "edited",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:17021139603840911",
+      "lastPropertyId": "11:7113684096226499391",
+      "name": "StarShipModel",
+      "properties": [
+        {
+          "id": "1:938111804885160917",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:704969056133239769",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6084687360350922944",
+          "name": "model",
+          "type": 9
+        },
+        {
+          "id": "4:1745763825512650070",
+          "name": "manufacturer",
+          "type": 9
+        },
+        {
+          "id": "5:3412985511169685310",
+          "name": "costInCredits",
+          "type": 6
+        },
+        {
+          "id": "6:6190278936728864776",
+          "name": "length",
+          "type": 8
+        },
+        {
+          "id": "7:306510155794341802",
+          "name": "maxAtmospheringSpeed",
+          "type": 6
+        },
+        {
+          "id": "8:3728892053305483628",
+          "name": "cargoCapacity",
+          "type": 6
+        },
+        {
+          "id": "9:7796115954487833117",
+          "name": "starshipClass",
+          "type": 9
+        },
+        {
+          "id": "10:1921348115193694151",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "11:7113684096226499391",
+          "name": "edited",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:165457346473604762",
+      "lastPropertyId": "11:8243114012930524924",
+      "name": "VehicleModel",
+      "properties": [
+        {
+          "id": "1:2180863114719720901",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2925714954104695395",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1581310610060537486",
+          "name": "model",
+          "type": 9
+        },
+        {
+          "id": "4:8470816216153768662",
+          "name": "manufacturer",
+          "type": 9
+        },
+        {
+          "id": "5:3663531469395286397",
+          "name": "costInCredits",
+          "type": 6
+        },
+        {
+          "id": "6:6174726558424536598",
+          "name": "length",
+          "type": 8
+        },
+        {
+          "id": "7:8505859935586206216",
+          "name": "maxAtmospheringSpeed",
+          "type": 6
+        },
+        {
+          "id": "8:6838012180869485262",
+          "name": "cargoCapacity",
+          "type": 6
+        },
+        {
+          "id": "9:3211050425174465670",
+          "name": "vehicleClass",
+          "type": 9
+        },
+        {
+          "id": "10:5758488770942706943",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "11:8243114012930524924",
+          "name": "edited",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4042271801934847532",
+      "lastPropertyId": "13:4387576392008665563",
+      "name": "CharacterModel",
+      "properties": [
+        {
+          "id": "1:3492199630147212209",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3458009492066944563",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:274079285631867887",
+          "name": "height",
+          "type": 6
+        },
+        {
+          "id": "4:6579683338389420328",
+          "name": "mass",
+          "type": 6
+        },
+        {
+          "id": "5:4321729915909760401",
+          "name": "hairColor",
+          "type": 9
+        },
+        {
+          "id": "6:2724260427996074545",
+          "name": "eyeColor",
+          "type": 9
+        },
+        {
+          "id": "7:2084817128058286601",
+          "name": "gender",
+          "type": 9
+        },
+        {
+          "id": "8:2738530086252896910",
+          "name": "birthYear",
+          "type": 9
+        },
+        {
+          "id": "9:6793960623915200515",
+          "name": "homeWorld",
+          "type": 9
+        },
+        {
+          "id": "10:2256480169743166139",
+          "name": "starShips",
+          "type": 30
+        },
+        {
+          "id": "11:7515967706198279785",
+          "name": "vehicles",
+          "type": 30
+        },
+        {
+          "id": "12:6357354837937728275",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "13:4387576392008665563",
+          "name": "edited",
+          "type": 10
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "5:4042271801934847532",
+  "lastIndexId": "4:6143545870394646016",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    6083401270948902473
+  ],
+  "retiredIndexUids": [
+    6501710558174555414,
+    2972568445175385928,
+    6143545870394646016
+  ],
+  "retiredPropertyUids": [
+    6665598828153135736,
+    8222998193293256801,
+    3785607953928739981,
+    9173974869430258243,
+    5164869239025728607,
+    3472900133999388713,
+    5602785461377512953,
+    5968973295505764920,
+    3111257433032941676,
+    1319998039383327832,
+    3481393916830888440,
+    5253498485594212765,
+    5696355054677523671
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:star_wars/screens/main/main/favorites_screen.dart';
 import 'package:star_wars/screens/main/main/home_screen.dart';
 import 'package:star_wars/screens/main/main/reports_screen.dart';
-import 'package:star_wars/widgets/button.dart';
+import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/widgets/internet_checker.dart';
 import 'package:star_wars/widgets/tab_item.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
@@ -74,7 +74,7 @@ class MainScreen extends HookWidget {
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 17),
+                                      fontSize: 20),
                                 )
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

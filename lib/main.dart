@@ -8,12 +8,17 @@ import 'package:star_wars/config/themes/theme_dark.dart';
 import 'package:star_wars/config/themes/theme_light.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/constants/routes.dart';
+import 'package:star_wars/objectbox.g.dart';
 import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/stores/starship.dart';
 import 'package:star_wars/stores/vehicle.dart';
 import 'package:star_wars/utils/helpers/local_storage_service.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+
+late var objectBoxStore;
 
 void main() async {
   //prepare
@@ -21,6 +26,9 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   AppRouter.Router.setupRouter();
   await LocalStorageService().setup();
+  final documentsDirectory = await getApplicationDocumentsDirectory();
+  objectBoxStore = await openStore(
+      directory: path.join(documentsDirectory.path, "starwars"));
 
   //run
   runApp(EasyLocalization(
