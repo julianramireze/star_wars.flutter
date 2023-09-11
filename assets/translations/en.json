@@ -16,5 +16,18 @@
     "female": "Female",
     "hermaphrodite": "Hermaphrodite",
     "unknown": "Unknown"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "select_language": "Select Language",
+    "dark_mode": "Dark Mode",
+    "dark_mode_subtitle": "Activate dark mode",
+    "connection": "Connection",
+    "connection_subtitle": "Enable the connection with star wars world"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish"
   }
 }
