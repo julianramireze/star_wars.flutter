@@ -18,6 +18,8 @@ class Colors {
   static const Color black = Color(0xFF2E2E2E);
   //DFDFDF
   static const Color white = Color(0xFFDFDFDF);
+  //C5C5C5
+  static const Color gray = Color(0xFFC5C5C5);
 
   //black color with 90% opacity
   static final Color blackModal = DefaultColor.Colors.black.withOpacity(0.90);
