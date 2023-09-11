@@ -10,5 +10,11 @@
   "again_with_internet": "Again with Internet",
   "hello": "Hello",
   "welcome_back": "Welcome back",
-  "search": "Search"
+  "search": "Search",
+  "genders": {
+    "male": "Male",
+    "female": "Female",
+    "hermaphrodite": "Hermaphrodite",
+    "unknown": "Unknown"
+  }
 }
