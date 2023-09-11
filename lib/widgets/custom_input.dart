@@ -16,6 +16,7 @@ class CustomInput extends HookWidget {
   final int? maxLength;
   final bool showMaxLength;
   final bool isPassword;
+  final bool isClearable;
   final TextAlign textAlign;
   final TextAlignVertical textAlignVertical;
   final String? Function(String?)? validator;
@@ -35,7 +36,9 @@ class CustomInput extends HookWidget {
   final FocusNode? focusNode;
   final Function()? onEditingComplete;
   final Color? colorEye;
+  final Color? colorClear;
   final double? height;
+  final Function()? onClear;
 
   var _controller = useTextEditingController(text: "");
 
@@ -50,6 +53,7 @@ class CustomInput extends HookWidget {
       this.maxLength,
       this.validator,
       this.isPassword = false,
+      this.isClearable = false,
       this.textAlign = TextAlign.start,
       this.textAlignVertical = TextAlignVertical.top,
       this.lines = 1,
@@ -71,10 +75,13 @@ class CustomInput extends HookWidget {
       this.focusNode,
       this.onEditingComplete,
       this.colorEye,
-      this.height});
+      this.colorClear,
+      this.height,
+      this.onClear});
 
   @override
   Widget build(BuildContext context) {
+    final text = useState(initialValue);
     var errorMessage = useState("");
     var passwordVisible = useState(false);
 
@@ -82,6 +89,7 @@ class CustomInput extends HookWidget {
       _controller.text = initialValue;
       _controller.addListener(() {
         if (onChange != null) onChange(_controller.text);
+        text.value = _controller.text;
       });
     }, () => {}, []);
 
@@ -165,6 +173,19 @@ class CustomInput extends HookWidget {
                     )),
                 onTap: () {
                   passwordVisible.value = !passwordVisible.value;
+                },
+              ),
+            if (isClearable && text.value.isNotEmpty)
+              GestureDetector(
+                child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: colorClear ?? Colors.grey,
+                    )),
+                onTap: () {
+                  _controller.text = "";
+                  if (onClear != null) onClear!();
                 },
               ),
           ]),
