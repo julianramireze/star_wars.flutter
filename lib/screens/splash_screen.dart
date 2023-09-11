@@ -48,9 +48,7 @@ class SplashScreen extends HookWidget {
     }, () {}, []);
 
     return Scaffold(
-        backgroundColor: settingsStore.darkMode
-            ? AppColors.Colors.black
-            : AppColors.Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Stack(children: [
           Center(
             child: Image.asset(

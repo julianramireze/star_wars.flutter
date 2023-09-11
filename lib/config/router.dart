@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:star_wars/constants/routes.dart';
+import 'package:star_wars/models/character.dart';
+import 'package:star_wars/screens/general/character_screen.dart';
 import 'package:star_wars/screens/general/settings_screen.dart';
 import 'package:star_wars/screens/general/web_view_screen.dart';
 import 'package:star_wars/screens/splash_screen.dart';
@@ -26,6 +28,8 @@ class Router {
     fluroRouter.define(Routes.main.toString(), handler: _mainScreenHandler);
     fluroRouter.define(Routes.settings.toString(),
         handler: _settingsScreenHandler);
+    fluroRouter.define(Routes.character.toString(),
+        handler: _characterScreenHandler);
     fluroRouter.define(Routes.webview.toString(),
         handler: _webviewScreenHandler);
   }
@@ -43,6 +47,15 @@ class Router {
   static final _settingsScreenHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
     return const SettingsScreen();
+  });
+
+  static final _characterScreenHandler = Handler(
+      handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+    CharacterModel character = params['character']?[0] as CharacterModel;
+
+    return CharacterScreen(
+      character: character,
+    );
   });
 
   static final _webviewScreenHandler = Handler(

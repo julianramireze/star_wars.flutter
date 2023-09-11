@@ -57,96 +57,108 @@ class MainScreen extends HookWidget {
         child: WillPopScope(
             onWillPop: _onWillPop,
             child: InternetChecker(
-              child: Scaffold(
-                backgroundColor: AppColors.Colors.black,
-                resizeToAvoidBottomInset: true,
-                body: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, top: 20, right: 20, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _tabs[tabIndex.value].title.isNotEmpty
-                              ? Text(
-                                  _tabs[tabController.index].title,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    StyledText(
-                                      text: "${tr("hello")},",
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                    StyledText(
-                                      text: tr(
-                                        "welcome_back",
-                                      ),
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 15,
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                child: Scaffold(
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                    resizeToAvoidBottomInset: true,
+                    body: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, top: 20, right: 20, bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CustomButton(
-                                  onTap: () {
-                                    AppRouter.Router.fluroRouter.navigateTo(
-                                        context, Routes.settings.toString(),
-                                        transition: TransitionType.fadeIn);
-                                  },
-                                  padding: const EdgeInsets.all(0),
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: const Icon(
-                                    Icons.settings_rounded,
-                                    color: AppColors.Colors.blue,
-                                    size: 25,
-                                  )),
+                              _tabs[tabIndex.value].title.isNotEmpty
+                                  ? Text(
+                                      _tabs[tabController.index].title,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        StyledText(
+                                          text: "${tr("hello")},",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface),
+                                        ),
+                                        StyledText(
+                                          text: tr(
+                                            "welcome_back",
+                                          ),
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface),
+                                        ),
+                                      ],
+                                    ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  CustomButton(
+                                      onTap: () {
+                                        AppRouter.Router.fluroRouter.navigateTo(
+                                            context, Routes.settings.toString(),
+                                            transition: TransitionType.fadeIn);
+                                      },
+                                      padding: const EdgeInsets.all(0),
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: const Icon(
+                                        Icons.settings_rounded,
+                                        color: AppColors.Colors.blue,
+                                        size: 25,
+                                      )),
+                                ],
+                              )
                             ],
-                          )
+                          ),
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            controller: tabController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children:
+                                _tabs.map<Widget>((tab) => tab.screen).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    bottomNavigationBar: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Theme.of(context).colorScheme.onBackground,
+                              blurRadius: 0.1),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        controller: tabController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children:
-                            _tabs.map<Widget>((tab) => tab.screen).toList(),
+                      child: ColoredBox(
+                        color: Theme.of(context).colorScheme.background,
+                        child: Theme(
+                          data: ThemeData(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                          ),
+                          child: TabBar(
+                            controller: tabController,
+                            indicatorColor: Colors.transparent,
+                            labelColor: AppColors.Colors.blue,
+                            unselectedLabelColor: Colors.grey,
+                            tabs: _tabs.map<Tab>((tab) => tab.tab).toList(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                bottomNavigationBar: ColoredBox(
-                  color: Colors.black,
-                  child: Theme(
-                    data: ThemeData(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                    child: TabBar(
-                      controller: tabController,
-                      indicatorColor: Colors.transparent,
-                      labelColor: AppColors.Colors.blue,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: _tabs.map<Tab>((tab) => tab.tab).toList(),
-                    ),
-                  ),
-                ),
-              ),
-            )));
+                    )))));
   }
 }

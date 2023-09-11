@@ -22,7 +22,7 @@ class FavoritesScreen extends HookWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          backgroundColor: AppColors.Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.background,
           resizeToAvoidBottomInset: true,
           body: Column(children: [
             Expanded(

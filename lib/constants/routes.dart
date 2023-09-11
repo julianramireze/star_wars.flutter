@@ -1,1 +1,1 @@
-enum Routes { splash, main, settings, webview }
+enum Routes { splash, main, settings, webview, character }

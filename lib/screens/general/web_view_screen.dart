@@ -35,7 +35,7 @@ class WebViewScreen extends HookWidget {
         child: WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          backgroundColor: AppColors.Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.background,
           resizeToAvoidBottomInset: true,
           body: CustomScrollView(
               physics: const BouncingScrollPhysics(),

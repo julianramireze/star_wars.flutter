@@ -59,7 +59,7 @@ class HomeScreen extends HookWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          backgroundColor: AppColors.Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.background,
           resizeToAvoidBottomInset: true,
           body: Column(children: [
             Padding(
@@ -76,7 +76,7 @@ class HomeScreen extends HookWidget {
                         isClearable: true,
                         colorBackground: Colors.white,
                         colorShadow: Colors.transparent,
-                        textColor: Theme.of(context).backgroundColor,
+                        textColor: Theme.of(context).colorScheme.onSurface,
                         colorClear: Colors.redAccent,
                         hint: tr("search"),
                         textInputType: TextInputType.name,
@@ -89,10 +89,10 @@ class HomeScreen extends HookWidget {
                         contentPadding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 45, left: 15),
                         style: TextStyle(
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 17),
                         hintStyle: TextStyle(
-                            color: AppColors.Colors.gray, fontSize: 17),
+                            color: AppColors.Colors.gray, fontSize: 15),
                         borderRadius: BorderRadius.circular(50),
                         onClear: () {
                           FocusScope.of(context).unfocus();
