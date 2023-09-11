@@ -13,7 +13,7 @@ import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/stores/starship.dart';
 import 'package:star_wars/stores/vehicle.dart';
-import 'package:star_wars/utils/ui/helpers/local_storage_service.dart';
+import 'package:star_wars/utils/helpers/local_storage_service.dart';
 
 void main() async {
   //prepare
