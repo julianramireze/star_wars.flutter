@@ -27,7 +27,7 @@ class Gender {
 
     if (gender == GenderType.male.name) {
       finalGender =
-          Gender(gender: GenderType.male.name, color: Colors.blueAccent);
+          Gender(gender: GenderType.male.name, color: Colors.greenAccent);
     } else if (gender == GenderType.female.name) {
       finalGender =
           Gender(gender: GenderType.female.name, color: Colors.pinkAccent);
@@ -37,7 +37,7 @@ class Gender {
           color: Colors.deepPurpleAccent);
     } else {
       finalGender =
-          Gender(gender: GenderType.unknown.name, color: Colors.yellowAccent);
+          Gender(gender: GenderType.unknown.name, color: Colors.orangeAccent);
     }
 
     return finalGender;
@@ -97,16 +97,16 @@ class Character extends HookWidget {
                         margin: const EdgeInsets.only(bottom: 10),
                         child: Text(character.name,
                             maxLines: 1,
-                            style: const TextStyle(
-                                color: AppColors.Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal)),
                       ),
                       Text(tr("genders." + gender.gender),
                           maxLines: 1,
                           style: TextStyle(
                               color: gender.color,
-                              fontSize: 13.5,
+                              fontSize: 13,
                               fontWeight: FontWeight.w200))
                     ],
                   ),
