@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
-import 'package:star_wars/models/realm/vehicle.dart';
+import 'package:star_wars/models/vehicle.dart';
 
 class VehicleStore extends ChangeNotifier {
-  final realm = Realm(Configuration.local([Vehicle.schema], schemaVersion: 1));
-
-  init() async {
-    var vehicles =
-        realm.all<Vehicle>().map((vehicle) => vehicle.toJson()).toList();
-    setVehicles(vehicles);
-  }
+  init() async {}
 
   List<dynamic> _vehicles = [];
 

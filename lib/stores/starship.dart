@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
-import 'package:star_wars/models/realm/starship.dart';
+import 'package:star_wars/models/starship.dart';
 
 class StarShipStore extends ChangeNotifier {
-  final realm = Realm(Configuration.local([StarShip.schema], schemaVersion: 1));
-
-  init() async {
-    var starShip =
-        realm.all<StarShip>().map((starShip) => starShip.toJson()).toList();
-    setStarShips(starShip);
-  }
+  init() async {}
 
   List<dynamic> _starShips = [];
 
