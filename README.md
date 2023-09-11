@@ -5,12 +5,12 @@ This is a simple app that uses the [Star Wars API](https://swapi.dev/) to displa
 - Display a list of all the characters. :heavy_check_mark:
 - Display all the information about a character.
 - Report a character.
-- Menu for enabling/disabling connection.
+- Menu for enabling/disabling connection. :heavy_check_mark:
 
 ## Extra features
 - Add Tabs Navigation. :heavy_check_mark:
 - Uses a local database to store the characters and their information.
-- Modes: Light and Dark in Menu.
+- Modes: Light and Dark in Menu. :heavy_check_mark:
 - The app is available in English and Spanish. :heavy_check_mark:
 - Personalized icon for the app. :heavy_check_mark:
 - Personalized splash screen. :heavy_check_mark:
