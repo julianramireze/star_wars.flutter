@@ -7,6 +7,10 @@ part 'vehicle.g.dart';
 @JsonSerializable()
 @JsonStringToInt()
 class VehicleModel {
+  @Id()
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  late int id;
+
   @JsonKey(name: 'name')
   late String name;
 
