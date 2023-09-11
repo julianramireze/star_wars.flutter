@@ -32,6 +32,7 @@ dependencies:
   connectivity_plus: ^3.0.4
   objectbox: ^2.2.1
   objectbox_flutter_libs: any
+  package_info_plus: ^1.4.0
 
 dev_dependencies:
   flutter_test:
