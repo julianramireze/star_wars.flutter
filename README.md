@@ -17,7 +17,7 @@ This is a simple app that uses the [Star Wars API](https://swapi.dev/) to displa
 - Favorites: You can add a character to your favorites and see them in the favorites section. :heavy_check_mark:
 - Search: You can search for a character by name. :heavy_check_mark:
 - Button for look character in google images.
-- Unreport a character(local).
+- UnReport a character(local).
 
 ## Extra documentation
 The PDF file with the extra documentation is in the documentation folder of the repository, the name is: "Challenge Flutter.pdf"
