@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:star_wars/screens/main/main/favorites_screen.dart';
 import 'package:star_wars/screens/main/main/home_screen.dart';
 import 'package:star_wars/screens/main/main/reports_screen.dart';
+import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/widgets/internet_checker.dart';
 import 'package:star_wars/widgets/tab_item.dart';
@@ -107,19 +108,29 @@ class MainScreen extends HookWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  CustomButton(
-                                      onTap: () {
-                                        AppRouter.Router.fluroRouter.navigateTo(
-                                            context, Routes.settings.toString(),
-                                            transition: TransitionType.fadeIn);
-                                      },
-                                      padding: const EdgeInsets.all(0),
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: const Icon(
-                                        Icons.settings_rounded,
-                                        color: AppColors.Colors.blue,
-                                        size: 25,
-                                      )),
+                                  CustomBoxShadow(
+                                    padding: const EdgeInsets.all(5),
+                                    radius: 50,
+                                    colorBackground:
+                                        Colors.white.withOpacity(0.2),
+                                    colorShadow: Colors.transparent,
+                                    child: CustomButton(
+                                        onTap: () {
+                                          AppRouter.Router.fluroRouter
+                                              .navigateTo(context,
+                                                  Routes.settings.toString(),
+                                                  transition:
+                                                      TransitionType.fadeIn);
+                                        },
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        padding: const EdgeInsets.all(0),
+                                        child: const Icon(
+                                          Icons.settings_rounded,
+                                          color: AppColors.Colors.blue,
+                                          size: 25,
+                                        )),
+                                  ),
                                 ],
                               )
                             ],
