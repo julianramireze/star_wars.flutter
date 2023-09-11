@@ -15,8 +15,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 var closeAppModal = (context, onPressCancel, onPressAccept) {
   return Alert(
       context: context,
-      image: const Icon(Icons.sentiment_dissatisfied_outlined,
-          color: Colors.redAccent, size: 45),
       title: tr("close_app"),
       desc: tr("want_close_app"),
       style: AlertStyle(
@@ -37,7 +35,7 @@ var closeAppModal = (context, onPressCancel, onPressAccept) {
       ),
       buttons: [
         DialogButton(
-          color: Colors.blue,
+          color: AppColors.Colors.blue,
           height: 35,
           child: Text(
             tr('cancel'),
@@ -46,7 +44,7 @@ var closeAppModal = (context, onPressCancel, onPressAccept) {
           onPressed: () => onPressCancel(),
         ),
         DialogButton(
-          color: AppColors.Colors.blue,
+          color: Colors.redAccent,
           height: 35,
           child: Text(
             tr('accept'),
