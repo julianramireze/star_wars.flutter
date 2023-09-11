@@ -30,6 +30,10 @@ void main() async {
   objectBoxStore = await openStore(
       directory: path.join(documentsDirectory.path, "starwars"));
 
+  //setup
+  final settingsStore = await SettingsStore();
+  await settingsStore.init();
+
   //run
   runApp(EasyLocalization(
       supportedLocales: const [Locale('es'), Locale('en')],
@@ -40,6 +44,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PlanetStore()),
         ChangeNotifierProvider(create: (_) => VehicleStore()),
         ChangeNotifierProvider(create: (_) => StarShipStore()),
+        ChangeNotifierProvider(create: (_) => settingsStore),
       ], child: MyApp())));
 }
 
@@ -51,22 +56,20 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: AppColors.Colors.black,
     ));
+
+    final settingsStore = Provider.of<SettingsStore>(context);
+
     return DefaultTextHeightBehavior(
         textHeightBehavior: const TextHeightBehavior(),
-        child: ChangeNotifierProvider(
-            create: (context) => SettingsStore(),
-            builder: (context, _) {
-              final settingsStore = Provider.of<SettingsStore>(context);
-              return MaterialApp(
-                title: "Star Wars",
-                theme: settingsStore.darkMode ? themeDark : themeLight,
-                debugShowCheckedModeBanner: false,
-                initialRoute: Routes.splash.toString(),
-                onGenerateRoute: AppRouter.Router.fluroRouter.generator,
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-              );
-            }));
+        child: MaterialApp(
+          title: "Star Wars",
+          theme: settingsStore.darkMode ? themeDark : themeLight,
+          debugShowCheckedModeBanner: false,
+          initialRoute: Routes.splash.toString(),
+          onGenerateRoute: AppRouter.Router.fluroRouter.generator,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+        ));
   }
 }
