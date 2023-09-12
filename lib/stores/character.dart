@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/services/character.dart';
 import 'package:star_wars/utils/helpers/local_storage_service.dart';
@@ -84,11 +85,6 @@ class CharacterStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addCharactersFavorites(List<CharacterModel> characters) {
-    _charactersFavorites.addAll(characters);
-    notifyListeners();
-  }
-
   void addCharacterFavorite(CharacterModel character) {
     _charactersFavorites.add(character);
     notifyListeners();
@@ -98,18 +94,14 @@ class CharacterStore extends ChangeNotifier {
   }
 
   void removeCharacterFavorite(CharacterModel character) {
-    _charactersFavorites.remove(character);
+    _charactersFavorites.removeWhere(
+        (characterFavorite) => characterFavorite.name == character.name);
     notifyListeners();
   }
 
   // characters reported
   void setCharactersReported(List<CharacterModel> characters) {
     _charactersReported = characters;
-    notifyListeners();
-  }
-
-  void addCharactersReported(List<CharacterModel> characters) {
-    _charactersReported.addAll(characters);
     notifyListeners();
   }
 
@@ -122,16 +114,18 @@ class CharacterStore extends ChangeNotifier {
   }
 
   void removeCharacterReported(CharacterModel character) {
-    _charactersReported.remove(character);
+    _charactersReported.removeWhere(
+        (characterReported) => characterReported.name == character.name);
     notifyListeners();
   }
 
   late RequestState requestStateGet = RequestState(this);
+  late RequestState requestStateReport = RequestState(this);
 
   Future<void> get(int page) async {
-    requestStateGet.setLoading(true);
-    requestStateGet.setSuccess(null);
-    requestStateGet.setError(-1);
+    requestStateGet.setLoading(RequestStateLoadingType.loading);
+    requestStateGet.setSuccess(RequestStateSuccessType.none);
+    requestStateGet.setError(RequestStateErrorType.none);
 
     try {
       final request = await CharacterService.get(page);
@@ -147,10 +141,40 @@ class CharacterStore extends ChangeNotifier {
       if (kDebugMode) {
         print(error);
       }
-
-      requestStateGet.setError(error.response?.statusCode as int);
+      if (await InternetConnectionChecker().hasConnection) {
+        requestStateGet.setError(error.response?.statusCode as int);
+      } else {
+        requestStateReport.setError(RequestStateErrorType.noInternet);
+      }
     }
 
-    requestStateGet.setLoading(false);
+    requestStateGet.setLoading(RequestStateLoadingType.noLoading);
+  }
+
+  Future<void> report(CharacterModel character) async {
+    requestStateReport.setLoading(RequestStateLoadingType.loading);
+    requestStateReport.setSuccess(RequestStateSuccessType.none);
+    requestStateReport.setError(RequestStateErrorType.none);
+
+    try {
+      final request = await CharacterService.report(
+          character.id, DateTime.now().toString(), character.name);
+
+      addCharacterReported(character);
+
+      requestStateReport.setSuccess(request.data);
+    } on DioError catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+
+      if (await InternetConnectionChecker().hasConnection) {
+        requestStateReport.setError(error.response?.statusCode as int);
+      } else {
+        requestStateReport.setError(RequestStateErrorType.noInternet);
+      }
+    }
+
+    requestStateReport.setLoading(RequestStateLoadingType.noLoading);
   }
 }
