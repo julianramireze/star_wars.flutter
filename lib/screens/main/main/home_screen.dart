@@ -78,7 +78,7 @@ class HomeScreen extends HookWidget {
                         isClearable: true,
                         colorBackground: Colors.white,
                         colorShadow: Colors.transparent,
-                        textColor: Theme.of(context).colorScheme.onSurface,
+                        textColor: AppColors.Colors.black.withOpacity(0.8),
                         colorClear: Colors.redAccent,
                         hint: tr("search"),
                         textInputType: TextInputType.name,
@@ -91,7 +91,7 @@ class HomeScreen extends HookWidget {
                         contentPadding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 45, left: 15),
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: AppColors.Colors.black.withOpacity(0.8),
                             fontSize: 17),
                         hintStyle: TextStyle(
                             color: AppColors.Colors.gray, fontSize: 15),
