@@ -29,5 +29,7 @@
   "languages": {
     "en": "English",
     "es": "Spanish"
-  }
+  },
+  "more_information": "More information",
+  "mode_offline": "Offline mode"
 }
