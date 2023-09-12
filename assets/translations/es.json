@@ -31,5 +31,15 @@
     "es": "Español"
   },
   "more_information": "Más información",
-  "mode_offline": "Modo offline"
+  "mode_offline": "Modo offline",
+  "report": "Reportar",
+  "height": "Altura",
+  "mass": "Peso",
+  "hair_color": "Color de cabello",
+  "eye_color": "Color de ojos",
+  "gender": "Género",
+  "birth_year": "Fecha de nacimiento",
+  "home_world": "Planeta natal",
+  "star_ships": "Naves espaciales",
+  "vehicles": "Vehículos"
 }

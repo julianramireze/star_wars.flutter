@@ -31,5 +31,16 @@
     "es": "Spanish"
   },
   "more_information": "More information",
-  "mode_offline": "Offline mode"
+  "mode_offline": "Offline mode",
+  "report": "Report",
+  "height": "Height",
+  "mass": "Mass",
+  "hair_color": "Hair color",
+  "eye_color": "Eye color",
+  "gender": "Gender",
+  "birth_year": "Birth year",
+  "home_world": "Home world",
+  "star_ships": "Star ships",
+  "vehicles": "Vehicles"
+
 }
