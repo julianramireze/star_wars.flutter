@@ -109,7 +109,7 @@ class MainScreen extends HookWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   CustomBoxShadow(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(4),
                                     radius: 50,
                                     colorBackground:
                                         Colors.white.withOpacity(0.2),

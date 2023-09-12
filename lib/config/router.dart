@@ -51,7 +51,7 @@ class Router {
 
   static final _characterScreenHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-    CharacterModel character = params['character']?[0] as CharacterModel;
+    CharacterModel character = context?.settings?.arguments as CharacterModel;
 
     return CharacterScreen(
       character: character,

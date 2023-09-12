@@ -52,12 +52,14 @@ class Character extends HookWidget {
   final CharacterModel character;
   final CharacterFavoriteType isFavorite;
   final CharacterReportType isReported;
+  final Function? onTap;
 
   const Character(
       {Key? key,
       required this.character,
       required this.isFavorite,
-      required this.isReported})
+      required this.isReported,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -71,10 +73,9 @@ class Character extends HookWidget {
     return CustomButton(
         borderRadius: BorderRadius.circular(5),
         onTap: () {
-          AppRouter.Router.fluroRouter.navigateTo(
-              context, Routes.character.toString(),
-              routeSettings: RouteSettings(arguments: character),
-              transition: TransitionType.inFromRight);
+          if (onTap != null) {
+            onTap!();
+          }
         },
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
         child: Row(
