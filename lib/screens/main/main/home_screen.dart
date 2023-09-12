@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:star_wars/config/api.dart';
 import 'package:star_wars/constants/assets.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
@@ -139,6 +140,17 @@ class HomeScreen extends HookWidget {
                                       routeSettings:
                                           RouteSettings(arguments: character),
                                       transition: TransitionType.inFromRight);
+                                },
+                                showSearchMore: true,
+                                onTapSearchMore: () {
+                                  AppRouter.Router.fluroRouter.navigateTo(
+                                      context, Routes.webview.toString(),
+                                      transition: TransitionType.inFromRight,
+                                      routeSettings: RouteSettings(arguments: {
+                                        "url":
+                                            "${Api.baseUrlGoogleSearch}?q=${Uri.encodeComponent("${character.name} star wars")}",
+                                        "title": tr("more_information")
+                                      }));
                                 },
                               );
                             },

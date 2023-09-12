@@ -52,14 +52,18 @@ class Character extends HookWidget {
   final CharacterModel character;
   final CharacterFavoriteType isFavorite;
   final CharacterReportType isReported;
+  final bool showSearchMore;
   final Function? onTap;
+  final Function? onTapSearchMore;
 
   const Character(
       {Key? key,
       required this.character,
       required this.isFavorite,
       required this.isReported,
-      this.onTap})
+      this.showSearchMore = false,
+      this.onTap,
+      this.onTapSearchMore})
       : super(key: key);
 
   @override
@@ -82,6 +86,7 @@ class Character extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: 50,
@@ -120,27 +125,46 @@ class Character extends HookWidget {
                 )
               ],
             ),
-            CustomButton(
-                showInk: false,
-                padding: const EdgeInsets.all(0),
-                onTap: () {
-                  if (this.isFavorite == CharacterFavoriteType.favorite) {
-                    characterStore.removeCharacterFavorites(character);
-                  } else {
-                    characterStore.addCharacterFavorites(character);
-                  }
-                },
-                child: this.isFavorite == CharacterFavoriteType.favorite
-                    ? const Icon(
-                        Icons.favorite_rounded,
-                        color: Colors.redAccent,
+            Row(
+              children: [
+                if (showSearchMore)
+                  CustomButton(
+                      showInk: false,
+                      padding: const EdgeInsets.all(0),
+                      margin: const EdgeInsets.only(right: 15),
+                      onTap: () {
+                        if (onTapSearchMore != null) {
+                          onTapSearchMore!();
+                        }
+                      },
+                      child: Icon(
+                        Icons.image_search_rounded,
+                        color: Theme.of(context).colorScheme.secondary,
                         size: 25,
-                      )
-                    : const Icon(
-                        Icons.favorite_rounded,
-                        color: AppColors.Colors.gray,
-                        size: 25,
-                      ))
+                      )),
+                CustomButton(
+                    showInk: false,
+                    padding: const EdgeInsets.all(0),
+                    onTap: () {
+                      if (this.isFavorite == CharacterFavoriteType.favorite) {
+                        characterStore.removeCharacterFavorites(character);
+                      } else {
+                        characterStore.addCharacterFavorites(character);
+                      }
+                    },
+                    child: this.isFavorite == CharacterFavoriteType.favorite
+                        ? const Icon(
+                            Icons.favorite_rounded,
+                            color: Colors.redAccent,
+                            size: 25,
+                          )
+                        : const Icon(
+                            Icons.favorite_rounded,
+                            color: AppColors.Colors.gray,
+                            size: 25,
+                          )),
+              ],
+            ),
           ],
         ));
   }
