@@ -176,9 +176,9 @@ class Character extends HookWidget {
                       padding: const EdgeInsets.all(0),
                       onTap: () {
                         if (isReported == CharacterReportType.report) {
-                          characterStore.removeCharacterFavorite(character);
+                          characterStore.removeCharacterReported(character);
                         } else {
-                          characterStore.addCharacterFavorite(character);
+                          characterStore.addCharacterReported(character);
                         }
                       },
                       child: isReported == CharacterReportType.report
