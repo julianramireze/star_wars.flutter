@@ -1,10 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:star_wars/utils/helpers/JsonSerializable/JsonStringToInt.dart';
+import 'package:uuid/uuid.dart';
 part 'character.g.dart';
 
 @JsonSerializable()
 @JsonStringToInt()
 class CharacterModel {
+  @JsonKey(name: 'id', defaultValue: 0)
+  late int id;
+
   @JsonKey(name: 'name')
   late String name;
 
@@ -45,4 +49,24 @@ class CharacterModel {
       _$CharacterModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CharacterModelToJson(this);
+
+  CharacterModel({
+    required this.id,
+    required this.name,
+    required this.height,
+    required this.mass,
+    required this.hairColor,
+    required this.eyeColor,
+    required this.gender,
+    required this.birthYear,
+    required this.homeWorld,
+    required this.starShips,
+    required this.vehicles,
+    required this.created,
+    required this.edited,
+  }) {
+    if (id == 0) {
+      id = int.parse(const Uuid().v4().toString().substring(0, 8), radix: 16);
+    }
+  }
 }
