@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
+import 'package:star_wars/config/keys.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
 import 'package:star_wars/config/themes/theme_dark.dart';
 import 'package:star_wars/config/themes/theme_light.dart';
@@ -14,10 +14,7 @@ import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/stores/starship.dart';
 import 'package:star_wars/stores/vehicle.dart';
 import 'package:star_wars/utils/helpers/local_storage_service.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
-
-late var objectBoxStore;
+import 'package:microsoft_azure_translator/microsoft_azure_translator.dart';
 
 void main() async {
   //prepare
@@ -25,10 +22,11 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   AppRouter.Router.setupRouter();
   await LocalStorageService().setup();
-  final documentsDirectory = await getApplicationDocumentsDirectory();
+  MicrosoftAzureTranslator.initialize(
+      Keys.azureTranslationSubscriptionKey, Keys.azureTranslationRegion);
 
   //setup
-  final settingsStore = await SettingsStore();
+  final settingsStore = SettingsStore();
   await settingsStore.init();
 
   //run
@@ -42,7 +40,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => VehicleStore()),
         ChangeNotifierProvider(create: (_) => StarShipStore()),
         ChangeNotifierProvider(create: (_) => settingsStore),
-      ], child: MyApp())));
+      ], child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {

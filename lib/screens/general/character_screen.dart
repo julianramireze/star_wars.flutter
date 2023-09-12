@@ -2,16 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:microsoft_azure_translator/microsoft_azure_translator.dart';
 import 'package:provider/provider.dart';
 import 'package:star_wars/config/api.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
+import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/stores/settings.dart';
+import 'package:star_wars/utils/helpers/hooks.dart';
+import 'package:star_wars/utils/helpers/request_state.dart';
 import 'package:star_wars/widgets/character.dart';
 import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
+import 'package:star_wars/widgets/custom_toast.dart';
 
 class CharacterScreen extends HookWidget {
   final CharacterModel character;
@@ -20,14 +26,91 @@ class CharacterScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final characterStore = Provider.of<CharacterStore>(context);
     final settingsStore = Provider.of<SettingsStore>(context);
+    final isFavorite = characterStore.charactersFavorites
+        .any((characterFavorite) => characterFavorite.name == character.name);
+    final isReported = characterStore.charactersReported
+        .any((characterReported) => characterReported.name == character.name);
     final gender =
         Gender.StringToGender(character.gender, settingsStore.darkMode);
+    final translations = useState({
+      "hair_color": character.hairColor,
+      "eye_color": character.eyeColor,
+    });
 
     Future<bool> _onWillPop() async {
       AppRouter.Router.popRoute(context);
       return false;
     }
+
+    useAsyncEffect(() {
+      (() async {
+        Map<String, String> newTranslations = {};
+
+        for (String translationKey in translations.value.keys) {
+          final translationItem = translations.value[translationKey] ?? "";
+          List<dynamic>? AzureTranslation = await MicrosoftAzureTranslator
+              .instance
+              .translate(translationItem, "en", context.locale.languageCode);
+
+          if (AzureTranslation != null && AzureTranslation.isNotEmpty) {
+            newTranslations[translationKey] =
+                AzureTranslation[0]['text'].substring(0, 1).toUpperCase() +
+                    AzureTranslation[0]['text'].substring(1);
+          } else {
+            newTranslations[translationKey] = translationItem.toUpperCase() +
+                translationItem.substring(1).toLowerCase();
+          }
+        }
+
+        translations.value = newTranslations;
+      })();
+    }, () {}, []);
+
+    useAsyncEffect(() {
+      if (characterStore.requestStateReport.success !=
+          RequestStateSuccessType.none) {
+        CustomToast(context,
+                icon: const Icon(
+                  Icons.error_outlined,
+                  color: AppColors.Colors.black,
+                ),
+                text: tr("success_report"),
+                bottom: MediaQuery.of(context).size.height * 0.6,
+                backgroundColor: settingsStore.darkMode
+                    ? Colors.greenAccent
+                    : Colors.green[400]!,
+                textStyle: const TextStyle(
+                    fontSize: 14, color: AppColors.Colors.black))
+            .show();
+      }
+
+      if (characterStore.requestStateReport.error !=
+          RequestStateErrorType.none) {
+        CustomToast(context,
+                icon: const Icon(
+                  Icons.error_rounded,
+                  color: AppColors.Colors.black,
+                ),
+                text: characterStore.requestStateReport.error ==
+                        RequestStateErrorType.noInternet
+                    ? tr("check_internet")
+                    : tr("try_later"),
+                bottom: MediaQuery.of(context).size.height * 0.6,
+                backgroundColor: settingsStore.darkMode
+                    ? Colors.redAccent
+                    : Colors.red[400]!,
+                textStyle:
+                    TextStyle(fontSize: 14, color: AppColors.Colors.black))
+            .show();
+      }
+
+      characterStore.requestStateReport.clear();
+    }, () => {}, [
+      characterStore.requestStateReport.success,
+      characterStore.requestStateReport.error
+    ]);
 
     return SafeArea(
         child: WillPopScope(
@@ -85,7 +168,7 @@ class CharacterScreen extends HookWidget {
                                             routeSettings:
                                                 RouteSettings(arguments: {
                                               "url":
-                                                  "${Api.baseUrlGoogleSearch}?q=${Uri.encodeComponent("${character.name} star wars")}",
+                                                  "${Api.getServerGoogle}search?q=${Uri.encodeComponent("${character.name} star wars")}",
                                               "title": tr("more_information")
                                             }));
                                       },
@@ -169,7 +252,7 @@ class CharacterScreen extends HookWidget {
                             child: SingleChildScrollView(
                           child: Container(
                               margin:
-                                  const EdgeInsets.only(left: 20, right: 20),
+                                  const EdgeInsets.only(left: 25, right: 25),
                               child: Column(children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
@@ -192,7 +275,7 @@ class CharacterScreen extends HookWidget {
                                                         .onSurface,
                                                     fontSize: 15,
                                                     fontWeight:
-                                                        FontWeight.bold),
+                                                        FontWeight.w500),
                                               ),
                                             ),
                                             Text(
@@ -200,7 +283,7 @@ class CharacterScreen extends HookWidget {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .onSurface,
+                                                      .onBackground,
                                                   fontSize: 14,
                                                   fontWeight:
                                                       FontWeight.normal),
@@ -222,7 +305,7 @@ class CharacterScreen extends HookWidget {
                                                         .onSurface,
                                                     fontSize: 15,
                                                     fontWeight:
-                                                        FontWeight.bold),
+                                                        FontWeight.w500),
                                               ),
                                             ),
                                             Text(
@@ -230,7 +313,7 @@ class CharacterScreen extends HookWidget {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .onSurface,
+                                                      .onBackground,
                                                   fontSize: 14,
                                                   fontWeight:
                                                       FontWeight.normal),
@@ -259,15 +342,16 @@ class CharacterScreen extends HookWidget {
                                                       .colorScheme
                                                       .onSurface,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                           Text(
-                                            character.hairColor,
+                                            translations.value["hair_color"] ??
+                                                character.hairColor,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onSurface,
+                                                    .onBackground,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
@@ -287,15 +371,16 @@ class CharacterScreen extends HookWidget {
                                                       .colorScheme
                                                       .onSurface,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                           Text(
-                                            character.eyeColor,
+                                            translations.value["eye_color"] ??
+                                                character.eyeColor,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onSurface,
+                                                    .onBackground,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
@@ -324,7 +409,7 @@ class CharacterScreen extends HookWidget {
                                                       .colorScheme
                                                       .onSurface,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                           Text(
@@ -350,7 +435,7 @@ class CharacterScreen extends HookWidget {
                                                       .colorScheme
                                                       .onSurface,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                           Text(
@@ -358,7 +443,7 @@ class CharacterScreen extends HookWidget {
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onSurface,
+                                                    .onBackground,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
@@ -373,20 +458,37 @@ class CharacterScreen extends HookWidget {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 15, bottom: 15),
+                                  left: 20, right: 20, top: 15, bottom: 15),
                               child: CustomButton(
-                                color: Theme.of(context).colorScheme.surface,
+                                onTap: () {
+                                  if (!characterStore
+                                      .requestStateReport.loading) {
+                                    if (isReported) {
+                                      characterStore
+                                          .removeCharacterReported(character);
+                                    } else {
+                                      characterStore.report(character);
+                                    }
+                                  }
+                                },
+                                color: isReported
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Colors.redAccent,
                                 disabledColor:
                                     Theme.of(context).colorScheme.onBackground,
                                 enabled: settingsStore.connectionEnabled,
+                                showInk:
+                                    !characterStore.requestStateReport.loading,
+                                loading:
+                                    characterStore.requestStateReport.loading,
                                 borderRadius: BorderRadius.circular(5),
                                 padding: const EdgeInsets.all(0),
                                 child: Container(
                                   alignment: Alignment.center,
-                                  width: MediaQuery.of(context).size.width - 30,
+                                  width: MediaQuery.of(context).size.width - 40,
                                   height: 40,
                                   child: Text(
-                                    tr("report"),
+                                    tr(isReported ? "unreport" : "report"),
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
