@@ -174,13 +174,13 @@ class Character extends HookWidget {
                     showInk: false,
                     padding: const EdgeInsets.all(0),
                     onTap: () {
-                      if (this.isFavorite == CharacterFavoriteType.favorite) {
-                        characterStore.removeCharacterFavorites(character);
+                      if (isFavorite == CharacterFavoriteType.favorite) {
+                        characterStore.removeCharacterFavorite(character);
                       } else {
-                        characterStore.addCharacterFavorites(character);
+                        characterStore.addCharacterFavorite(character);
                       }
                     },
-                    child: this.isFavorite == CharacterFavoriteType.favorite
+                    child: isFavorite == CharacterFavoriteType.favorite
                         ? const Icon(
                             Icons.favorite_rounded,
                             color: Colors.redAccent,

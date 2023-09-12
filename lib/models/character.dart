@@ -35,12 +35,6 @@ class CharacterModel {
   @JsonKey(name: 'vehicles')
   late List<String> vehicles;
 
-  @JsonKey(defaultValue: false)
-  late bool isFavorite;
-
-  @JsonKey(defaultValue: false)
-  late bool isReported;
-
   @JsonKey(name: 'created')
   late DateTime created;
 

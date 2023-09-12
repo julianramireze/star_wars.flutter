@@ -3,6 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum LocalStoreType {
+  charactersDefault,
+  charactersFavorites,
+  charactersReported
+}
+
 class LocalStorageService {
   static SharedPreferences? sharedPreferences;
 

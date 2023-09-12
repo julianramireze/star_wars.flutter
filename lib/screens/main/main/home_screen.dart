@@ -18,7 +18,6 @@ import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
 import 'package:star_wars/widgets/custom_input.dart';
-import 'package:star_wars/widgets/internet_checker.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -125,12 +124,14 @@ class HomeScreen extends HookWidget {
                             itemBuilder: (context, index) {
                               CharacterModel character =
                                   charactersFiltered.value[index];
-                              var finded = characterStore.charactersFavorites
+                              final isFavorite = characterStore
+                                  .charactersFavorites
                                   .any((characterFavorite) =>
                                       characterFavorite.name == character.name);
+
                               return Character(
                                   character: character,
-                                  isFavorite: finded
+                                  isFavorite: isFavorite
                                       ? CharacterFavoriteType.favorite
                                       : CharacterFavoriteType.unfavorite,
                                   isReported: CharacterReportType.none,
