@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:star_wars/config/api.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
@@ -62,25 +63,34 @@ class CharacterScreen extends HookWidget {
                                 ],
                               ),
                               CustomBoxShadow(
-                                padding: const EdgeInsets.all(4),
-                                radius: 50,
-                                margin: EdgeInsets.only(left: 12),
-                                colorBackground: Colors.white.withOpacity(0.2),
-                                colorShadow: Colors.transparent,
-                                child: CustomButton(
-                                    onTap: () {
-                                      AppRouter.Router.fluroRouter.navigateTo(
-                                          context, Routes.settings.toString(),
-                                          transition: TransitionType.fadeIn);
-                                    },
-                                    borderRadius: BorderRadius.circular(100),
-                                    padding: const EdgeInsets.all(0),
-                                    child: const Icon(
-                                      Icons.settings_rounded,
-                                      color: AppColors.Colors.blue,
-                                      size: 25,
-                                    )),
-                              ),
+                                  padding: const EdgeInsets.all(4),
+                                  radius: 50,
+                                  margin: EdgeInsets.only(left: 12),
+                                  colorBackground:
+                                      Colors.white.withOpacity(0.2),
+                                  colorShadow: Colors.transparent,
+                                  child: CustomButton(
+                                      onTap: () {
+                                        AppRouter.Router.fluroRouter.navigateTo(
+                                            context, Routes.webview.toString(),
+                                            transition:
+                                                TransitionType.inFromRight,
+                                            routeSettings:
+                                                RouteSettings(arguments: {
+                                              "url":
+                                                  "${Api.baseUrlGoogleSearch}?q=${Uri.encodeComponent("${character.name} star wars")}",
+                                              "title": tr("more_information")
+                                            }));
+                                      },
+                                      borderRadius: BorderRadius.circular(100),
+                                      padding: const EdgeInsets.all(0),
+                                      child: Icon(
+                                        Icons.image_search_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        size: 25,
+                                      ))),
                             ],
                           ),
                         ],
