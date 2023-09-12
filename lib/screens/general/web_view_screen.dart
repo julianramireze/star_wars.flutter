@@ -56,9 +56,10 @@ class WebViewScreen extends HookWidget {
                                 children: [
                                   IconButton(
                                     splashRadius: 1,
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.arrow_back_ios,
-                                      color: Colors.white,
+                                      color:
+                                          Theme.of(context).colorScheme.surface,
                                       size: 22,
                                     ),
                                     onPressed: () {
@@ -69,8 +70,10 @@ class WebViewScreen extends HookWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(title ?? "",
-                                          style: const TextStyle(
-                                              color: Colors.white,
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface,
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold)),
                                     ],
@@ -110,6 +113,7 @@ class WebViewScreen extends HookWidget {
                                     URLRequest(url: Uri.parse((url ?? ""))),
                                 initialOptions: InAppWebViewGroupOptions(
                                     crossPlatform: InAppWebViewOptions(
+                                        cacheEnabled: true,
                                         disableHorizontalScroll: true,
                                         transparentBackground: true,
                                         supportZoom: false)),
