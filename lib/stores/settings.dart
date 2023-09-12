@@ -9,7 +9,7 @@ class SettingsStore with ChangeNotifier {
   late String _language = "en";
 
   init() async {
-    _darkMode = await localStorageService.get('darkMode') ?? false;
+    _darkMode = await localStorageService.get('darkMode') ?? true;
     _connectionEnabled =
         await localStorageService.get('connectionEnabled') ?? true;
     notifyListeners();
