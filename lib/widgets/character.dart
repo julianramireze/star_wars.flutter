@@ -30,22 +30,22 @@ class Gender {
     if (gender == GenderType.male.name) {
       finalGender = Gender(
           gender: GenderType.male.name,
-          color: darkMode ? Colors.greenAccent : Colors.green[700]!,
+          color: darkMode ? Colors.greenAccent : Colors.green[400]!,
           icon: Icons.man_rounded);
     } else if (gender == GenderType.female.name) {
       finalGender = Gender(
           gender: GenderType.female.name,
-          color: darkMode ? Colors.pinkAccent : Colors.pink[700]!,
+          color: darkMode ? Colors.pinkAccent : Colors.pink[400]!,
           icon: Icons.girl_rounded);
     } else if (gender == GenderType.hermaphrodite.name) {
       finalGender = Gender(
           gender: GenderType.hermaphrodite.name,
-          color: darkMode ? Colors.purpleAccent : Colors.purple[700]!,
+          color: darkMode ? Colors.purpleAccent : Colors.purple[400]!,
           icon: Icons.transgender_rounded);
     } else {
       finalGender = Gender(
           gender: GenderType.unknown.name,
-          color: darkMode ? Colors.orangeAccent : Colors.orange[700]!,
+          color: darkMode ? Colors.orangeAccent : Colors.orange[400]!,
           icon: Icons.remove_rounded);
     }
 
