@@ -6,6 +6,7 @@ class CustomButton extends HookWidget {
   final BorderRadius? borderRadius;
   final child;
   final Color? color;
+  final Color? disabledColor;
   final loading;
   final success;
   final enabled;
@@ -21,6 +22,7 @@ class CustomButton extends HookWidget {
       this.borderRadius,
       this.child,
       this.color,
+      this.disabledColor,
       this.loading = false,
       this.success,
       this.enabled = true,
@@ -53,7 +55,9 @@ class CustomButton extends HookWidget {
         ignoring: !enabled,
         child: Material(
             borderRadius: borderRadius ?? BorderRadius.circular(0),
-            color: color ?? Colors.transparent,
+            color: enabled
+                ? color ?? Colors.transparent
+                : disabledColor ?? Colors.transparent,
             child: toucher(
                 child: Container(
                   margin: margin,
