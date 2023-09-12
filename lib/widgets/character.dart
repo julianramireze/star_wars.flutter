@@ -170,27 +170,50 @@ class Character extends HookWidget {
                     ],
                   ),
                 ),
-                CustomButton(
-                    showInk: false,
-                    padding: const EdgeInsets.all(0),
-                    onTap: () {
-                      if (isFavorite == CharacterFavoriteType.favorite) {
-                        characterStore.removeCharacterFavorite(character);
-                      } else {
-                        characterStore.addCharacterFavorite(character);
-                      }
-                    },
-                    child: isFavorite == CharacterFavoriteType.favorite
-                        ? const Icon(
-                            Icons.favorite_rounded,
-                            color: Colors.redAccent,
-                            size: 25,
-                          )
-                        : const Icon(
-                            Icons.favorite_rounded,
-                            color: AppColors.Colors.gray,
-                            size: 25,
-                          )),
+                if (isReported != CharacterReportType.none)
+                  CustomButton(
+                      showInk: false,
+                      padding: const EdgeInsets.all(0),
+                      onTap: () {
+                        if (isReported == CharacterReportType.report) {
+                          characterStore.removeCharacterFavorite(character);
+                        } else {
+                          characterStore.addCharacterFavorite(character);
+                        }
+                      },
+                      child: isReported == CharacterReportType.report
+                          ? const Icon(
+                              Icons.report_problem_rounded,
+                              color: Colors.orangeAccent,
+                              size: 25,
+                            )
+                          : const Icon(
+                              Icons.report_problem_rounded,
+                              color: Colors.orangeAccent,
+                              size: 25,
+                            )),
+                if (isFavorite != CharacterFavoriteType.none)
+                  CustomButton(
+                      showInk: false,
+                      padding: const EdgeInsets.all(0),
+                      onTap: () {
+                        if (isFavorite == CharacterFavoriteType.favorite) {
+                          characterStore.removeCharacterFavorite(character);
+                        } else {
+                          characterStore.addCharacterFavorite(character);
+                        }
+                      },
+                      child: isFavorite == CharacterFavoriteType.favorite
+                          ? const Icon(
+                              Icons.favorite_rounded,
+                              color: Colors.redAccent,
+                              size: 25,
+                            )
+                          : const Icon(
+                              Icons.favorite_rounded,
+                              color: AppColors.Colors.gray,
+                              size: 25,
+                            )),
               ],
             ),
           ],
