@@ -42,5 +42,8 @@
   "home_world": "Home world",
   "star_ships": "Star ships",
   "vehicles": "Vehicles",
-  "unreport": "Unreport"
+  "unreport": "Unreport",
+  "try_later": "Please, try again later",
+  "success_report": "Report sent successfully",
+  "check_internet": "Check your internet connection"
 }
