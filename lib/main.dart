@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:star_wars/config/keys.dart';
+import 'package:star_wars/config/key.dart' as Config;
 import 'package:star_wars/config/router.dart' as AppRouter;
 import 'package:star_wars/config/themes/theme_dark.dart';
 import 'package:star_wars/config/themes/theme_light.dart';
@@ -23,7 +23,8 @@ void main() async {
   AppRouter.Router.setupRouter();
   await LocalStorageService().setup();
   MicrosoftAzureTranslator.initialize(
-      Keys.azureTranslationSubscriptionKey, Keys.azureTranslationRegion);
+      Config.Key.azureTranslationSubscriptionKey,
+      Config.Key.azureTranslationRegion);
 
   //setup
   final settingsStore = SettingsStore();
