@@ -129,30 +129,18 @@ class HomeScreen extends HookWidget {
                                   .any((characterFavorite) =>
                                       characterFavorite.name == character.name);
                               return Character(
-                                character: character,
-                                isFavorite: finded
-                                    ? CharacterFavoriteType.favorite
-                                    : CharacterFavoriteType.unfavorite,
-                                isReported: CharacterReportType.none,
-                                onTap: () {
-                                  AppRouter.Router.fluroRouter.navigateTo(
-                                      context, Routes.character.toString(),
-                                      routeSettings:
-                                          RouteSettings(arguments: character),
-                                      transition: TransitionType.inFromRight);
-                                },
-                                showSearchMore: true,
-                                onTapSearchMore: () {
-                                  AppRouter.Router.fluroRouter.navigateTo(
-                                      context, Routes.webview.toString(),
-                                      transition: TransitionType.inFromRight,
-                                      routeSettings: RouteSettings(arguments: {
-                                        "url":
-                                            "${Api.baseUrlGoogleSearch}?q=${Uri.encodeComponent("${character.name} star wars")}",
-                                        "title": tr("more_information")
-                                      }));
-                                },
-                              );
+                                  character: character,
+                                  isFavorite: finded
+                                      ? CharacterFavoriteType.favorite
+                                      : CharacterFavoriteType.unfavorite,
+                                  isReported: CharacterReportType.none,
+                                  onTap: () {
+                                    AppRouter.Router.fluroRouter.navigateTo(
+                                        context, Routes.character.toString(),
+                                        routeSettings:
+                                            RouteSettings(arguments: character),
+                                        transition: TransitionType.inFromRight);
+                                  });
                             },
                           )))
           ]),
