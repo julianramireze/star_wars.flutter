@@ -64,6 +64,7 @@ class CharacterScreen extends HookWidget {
                               CustomBoxShadow(
                                 padding: const EdgeInsets.all(4),
                                 radius: 50,
+                                margin: EdgeInsets.only(left: 12),
                                 colorBackground: Colors.white.withOpacity(0.2),
                                 colorShadow: Colors.transparent,
                                 child: CustomButton(
