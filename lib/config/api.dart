@@ -8,7 +8,6 @@ class Api {
   static get getServerJsonPlaceholder => _serverJsonPlaceholder;
 
   static const baseUrl = "${_server}api/";
-  static const baseUrlGoogleSearch = "${_serverGoogle}search/";
   static const baseUrlJsonPlaceholder = _serverJsonPlaceholder;
 
   //endpoints for api
