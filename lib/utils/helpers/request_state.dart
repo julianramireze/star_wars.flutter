@@ -1,5 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
+class RequestStateLoadingType {
+  static const bool loading = true;
+  static const bool noLoading = false;
+}
+
+class RequestStateErrorType {
+  static const int none = -1;
+  static const int noInternet = -2;
+}
+
+class RequestStateSuccessType {
+  static dynamic none;
+}
+
 class RequestState extends ChangeNotifier {
   ChangeNotifier instance;
   bool _loading;
