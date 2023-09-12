@@ -30,8 +30,6 @@ dependencies:
   rflutter_alert: ^2.0.4
   styled_text: ^5.1.0
   connectivity_plus: ^3.0.4
-  objectbox: ^2.2.1
-  objectbox_flutter_libs: any
   package_info_plus: ^1.4.0
 
 dev_dependencies:
@@ -41,7 +39,6 @@ dev_dependencies:
   flutter_native_splash: ^2.1.1
   json_serializable: ^6.6.2
   build_runner: ^2.3.3
-  objectbox_generator: any
 
 flutter:
   uses-material-design: true

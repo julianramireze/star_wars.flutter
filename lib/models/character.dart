@@ -1,16 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:star_wars/utils/helpers/JsonSerializable/JsonStringToInt.dart';
 part 'character.g.dart';
 
-@Entity()
 @JsonSerializable()
 @JsonStringToInt()
 class CharacterModel {
-  @Id()
-  @JsonKey(includeToJson: false, includeFromJson: false)
-  late int id;
-
   @JsonKey(name: 'name')
   late String name;
 
@@ -40,6 +34,12 @@ class CharacterModel {
 
   @JsonKey(name: 'vehicles')
   late List<String> vehicles;
+
+  @JsonKey(defaultValue: false)
+  late bool isFavorite;
+
+  @JsonKey(defaultValue: false)
+  late bool isReported;
 
   @JsonKey(name: 'created')
   late DateTime created;

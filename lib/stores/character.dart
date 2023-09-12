@@ -9,26 +9,17 @@ import 'package:flutter/foundation.dart';
 import 'package:star_wars/main.dart';
 
 class CharacterStore extends ChangeNotifier {
-  late dynamic characterStore;
-
-  init() async {
-    characterStore = await objectBoxStore.box<CharacterModel>().query().build();
-  }
+  init() async {}
 
   List<CharacterModel> _characters = [];
-  List<CharacterModel> _charactersReported = [];
   List<CharacterModel> _charactersFavorites = [];
+  List<CharacterModel> _charactersReported = [];
 
   List<CharacterModel> get characters => _characters;
-  List<CharacterModel> get charactersReported => _charactersReported;
   List<CharacterModel> get charactersFavorites => _charactersFavorites;
+  List<CharacterModel> get charactersReported => _charactersReported;
 
   // characters
-  void setCharacters(List<CharacterModel> characters) {
-    _characters = characters;
-    notifyListeners();
-  }
-
   void addCharacters(List<CharacterModel> characters) {
     _characters.addAll(characters);
     notifyListeners();
@@ -39,41 +30,24 @@ class CharacterStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // characters reported
-  void setCharactersReported(List<CharacterModel> characters) {
-    _charactersReported = characters;
-    notifyListeners();
-  }
-
-  void addCharactersReported(List<CharacterModel> characters) {
-    _charactersReported.addAll(characters);
-    notifyListeners();
-  }
-
-  void addCharacterReported(CharacterModel character) {
-    _charactersReported.add(character);
+  void removeCharacter(CharacterModel character) {
+    _characters.remove(character);
     notifyListeners();
   }
 
   // characters favorites
-  void setCharactersFavorites(List<CharacterModel> characters) {
-    _charactersFavorites = characters;
-    notifyListeners();
-  }
-
   void addCharactersFavorites(List<CharacterModel> characters) {
     _charactersFavorites.addAll(characters);
     notifyListeners();
   }
 
-  void addCharacterFavorites(CharacterModel character) {
+  void addCharacterFavorite(CharacterModel character) {
     _charactersFavorites.add(character);
     notifyListeners();
   }
 
-  void removeCharacterFavorites(CharacterModel character) {
-    _charactersFavorites
-        .removeWhere((element) => element.name == character.name);
+  void removeCharacterFavorite(CharacterModel character) {
+    _charactersFavorites.remove(character);
     notifyListeners();
   }
 

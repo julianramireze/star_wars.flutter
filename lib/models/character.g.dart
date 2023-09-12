@@ -20,6 +20,8 @@ CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
           (json['starships'] as List<dynamic>).map((e) => e as String).toList()
       ..vehicles =
           (json['vehicles'] as List<dynamic>).map((e) => e as String).toList()
+      ..isFavorite = json['isFavorite'] as bool? ?? false
+      ..isReported = json['isReported'] as bool? ?? false
       ..created = DateTime.parse(json['created'] as String)
       ..edited = DateTime.parse(json['edited'] as String);
 
@@ -35,6 +37,8 @@ Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
       'homeworld': instance.homeWorld,
       'starships': instance.starShips,
       'vehicles': instance.vehicles,
+      'isFavorite': instance.isFavorite,
+      'isReported': instance.isReported,
       'created': instance.created.toIso8601String(),
       'edited': instance.edited.toIso8601String(),
     };
