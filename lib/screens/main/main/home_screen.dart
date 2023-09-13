@@ -37,15 +37,20 @@ class HomeScreen extends HookWidget {
     final charactersFiltered = useState([]);
 
     useAsyncEffect(() {
+      page.value = (characterStore.characters.isEmpty
+              ? 10
+              : characterStore.characters.length) ~/
+          10;
       characterStore.get(page.value);
 
       scrollController.addListener(() {
         if (scrollController.position.pixels ==
                 scrollController.position.maxScrollExtent &&
             !characterStore.requestStateGet.loading) {
-          if (characterStore.requestStateGet.success !=
+          if (characterStore.requestStateGet.success ==
               RequestStateSuccessType.none) {
             page.value = page.value + 1;
+            characterStore.requestStateGet.clear();
           }
           characterStore.get(page.value);
         }
@@ -54,7 +59,6 @@ class HomeScreen extends HookWidget {
     }, () {}, []);
 
     useAsyncEffect(() {
-      page.value = characterStore.characters.length ~/ 10;
       if (searchText.value != "") {
         charactersFiltered.value = characterStore.characters
             .where((character) => character.name
@@ -69,17 +73,6 @@ class HomeScreen extends HookWidget {
       characterStore.charactersFavorites,
       characterStore.charactersReported,
       searchText.value
-    ]);
-
-    useAsyncEffect(() {
-      if (characterStore.requestStateGet.error != RequestStateErrorType.none ||
-          characterStore.requestStateGet.success !=
-              RequestStateSuccessType.none) {
-        characterStore.requestStateGet.clear();
-      }
-    }, () {}, [
-      characterStore.requestStateGet.error,
-      characterStore.requestStateGet.success
     ]);
 
     return CustomButton(
