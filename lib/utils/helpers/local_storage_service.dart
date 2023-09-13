@@ -6,7 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum LocalStoreType {
   charactersDefault,
   charactersFavorites,
-  charactersReported
+  charactersReported,
+  planetsDefault,
+  vehiclesDefault,
+  starShipsDefault,
 }
 
 class LocalStorageService {
