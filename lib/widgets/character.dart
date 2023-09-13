@@ -98,6 +98,10 @@ class Character extends HookWidget {
                       prompt: Prompts.character(character.name, 'desert'),
                       name: character.name,
                       isCircle: true,
+                      loadingColors: [
+                        AppColors.Colors.gray,
+                        AppColors.Colors.grayDark
+                      ],
                     )),
                 Container(
                   margin: const EdgeInsets.only(left: 10),
