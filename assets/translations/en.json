@@ -45,5 +45,6 @@
   "unreport": "Unreport",
   "try_later": "Please, try again later",
   "success_report": "Report sent successfully",
-  "check_internet": "Check your internet connection"
+  "check_internet": "Check your internet connection",
+  "retry": "Retry"
 }

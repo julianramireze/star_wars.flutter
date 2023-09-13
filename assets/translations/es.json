@@ -45,5 +45,6 @@
   "unreport": "Desreportar",
   "try_later": "Por favor intenta más tarde",
   "success_report": "Reporte enviado con éxito",
-  "check_internet": "Por favor revisa tu conexión a internet"
+  "check_internet": "Por favor revisa tu conexión a internet",
+  "retry": "Reintentar"
 }
