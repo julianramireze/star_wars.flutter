@@ -15,6 +15,7 @@ class Api {
 
   //endpoints for api
   static const endpointPeople = "people/";
+  static const endpointPlanets = "planets/";
   //endpoints for stability.ai
   static const endpointGenerationStabilityAI = "generation/";
 }
