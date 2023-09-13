@@ -19,6 +19,7 @@ class StabilityAiImage extends HookWidget {
   final BoxDecoration? boxDecoration;
   final EdgeInsets padding;
   final EdgeInsets margin;
+  final Color? color;
 
   StabilityAiImage({
     required this.prompt,
@@ -30,6 +31,7 @@ class StabilityAiImage extends HookWidget {
     this.boxDecoration,
     this.padding = const EdgeInsets.all(0),
     this.margin = const EdgeInsets.all(0),
+    this.color,
   });
 
   @override
@@ -104,7 +106,7 @@ class StabilityAiImage extends HookWidget {
         margin: margin,
         decoration: boxDecoration ??
             BoxDecoration(
-              color: AppColors.Colors.gray,
+              color: color ?? AppColors.Colors.gray,
               borderRadius: isCircle
                   ? BorderRadius.circular(100)
                   : BorderRadius.circular(0),

@@ -141,6 +141,7 @@ class CharacterStore extends ChangeNotifier {
       if (kDebugMode) {
         print(error);
       }
+
       if (await InternetConnectionChecker().hasConnection) {
         requestStateGet.setError(error.response?.statusCode as int);
       } else {
