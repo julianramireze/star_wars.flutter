@@ -47,7 +47,7 @@ class HomeScreen extends HookWidget {
         if (scrollController.position.pixels ==
                 scrollController.position.maxScrollExtent &&
             !characterStore.requestStateGet.loading) {
-          if (characterStore.requestStateGet.success ==
+          if (characterStore.requestStateGet.success !=
               RequestStateSuccessType.none) {
             page.value = page.value + 1;
             characterStore.requestStateGet.clear();
