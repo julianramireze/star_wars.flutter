@@ -11,6 +11,7 @@ import 'package:star_wars/config/api.dart';
 import 'package:star_wars/constants/assets.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
+import 'package:star_wars/services/api.dart';
 import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/utils/helpers/hooks.dart' as CustomHooks;
 import 'package:star_wars/utils/helpers/request_state.dart';
@@ -28,6 +29,7 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     CustomHooks.useAutomaticKeepAlive(wantKeepAlive: true);
+    final scrollController = useScrollController();
     final focusNode = useFocusNode();
     final characterStore = Provider.of<CharacterStore>(context);
     final searchText = useState("");
@@ -36,10 +38,23 @@ class HomeScreen extends HookWidget {
 
     CustomHooks.useAsyncEffect(() {
       characterStore.get(page.value);
+
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+                scrollController.position.maxScrollExtent &&
+            !characterStore.requestStateGet.loading) {
+          if (characterStore.requestStateGet.success !=
+              RequestStateSuccessType.none) {
+            page.value = page.value + 1;
+          }
+          characterStore.get(page.value);
+        }
+      });
       return;
     }, () {}, []);
 
     CustomHooks.useAsyncEffect(() {
+      page.value = characterStore.characters.length ~/ 10;
       if (searchText.value != "") {
         charactersFiltered.value = characterStore.characters
             .where((character) => character.name
@@ -49,6 +64,8 @@ class HomeScreen extends HookWidget {
       } else {
         charactersFiltered.value = characterStore.characters;
       }
+
+      characterStore.requestStateGet.clear();
     }, () {}, [
       characterStore.characters,
       characterStore.charactersFavorites,
@@ -109,92 +126,104 @@ class HomeScreen extends HookWidget {
             ),
             Expanded(
                 child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
-                    child: characterStore.requestStateGet.loading &&
-                            characterStore.characters.isEmpty
-                        ? Center(
-                            child: Lottie.asset(
-                            loadingAnimation,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ))
-                        : characterStore.characters.isEmpty
-                            ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        tr(characterStore
-                                                    .requestStateGet.error ==
-                                                RequestStateErrorType.noInternet
-                                            ? "check_internet"
-                                            : "try_later"),
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal)),
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 20),
-                                      child: CustomButton(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                        padding: EdgeInsets.only(
-                                            top: 10,
-                                            bottom: 10,
-                                            left: 20,
-                                            right: 20),
-                                        borderRadius: BorderRadius.circular(50),
-                                        onTap: () {
-                                          characterStore.get(page.value);
-                                        },
-                                        child: Text(tr("retry"),
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurface,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal)),
-                                      ),
-                                    )
-                                  ],
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
+              child: characterStore.requestStateGet.loading &&
+                      characterStore.characters.isEmpty
+                  ? Center(
+                      child: Lottie.asset(
+                      loadingAnimation,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.fill,
+                    ))
+                  : characterStore.characters.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  tr(characterStore.requestStateGet.error ==
+                                          RequestStateErrorType.noInternet
+                                      ? "check_internet"
+                                      : "try_later"),
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal)),
+                              Container(
+                                margin: const EdgeInsets.only(top: 20),
+                                child: CustomButton(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 20, right: 20),
+                                  borderRadius: BorderRadius.circular(50),
+                                  onTap: () {
+                                    characterStore.get(page.value);
+                                  },
+                                  child: Text(tr("retry"),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal)),
                                 ),
                               )
-                            : ListView.builder(
-                                physics: BouncingScrollPhysics(
-                                    parent: AlwaysScrollableScrollPhysics()),
-                                itemCount: charactersFiltered.value.length,
-                                itemBuilder: (context, index) {
-                                  CharacterModel character =
-                                      charactersFiltered.value[index];
-                                  final isFavorite = characterStore
-                                      .charactersFavorites
-                                      .any((characterFavorite) =>
-                                          characterFavorite.name ==
-                                          character.name);
+                            ],
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            ListView.builder(
+                              physics: BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              controller: scrollController,
+                              itemCount: charactersFiltered.value.length,
+                              itemBuilder: (context, index) {
+                                CharacterModel character =
+                                    charactersFiltered.value[index];
+                                final isFavorite = characterStore
+                                    .charactersFavorites
+                                    .any((characterFavorite) =>
+                                        characterFavorite.name ==
+                                        character.name);
 
-                                  return Character(
-                                      character: character,
-                                      isFavorite: isFavorite
-                                          ? CharacterFavoriteType.favorite
-                                          : CharacterFavoriteType.unfavorite,
-                                      isReported: CharacterReportType.none,
-                                      onTap: () {
-                                        AppRouter.Router.fluroRouter.navigateTo(
-                                            context,
-                                            Routes.character.toString(),
-                                            routeSettings: RouteSettings(
-                                                arguments: character),
-                                            transition:
-                                                TransitionType.inFromRight);
-                                      });
-                                },
-                              )))
+                                return Character(
+                                    character: character,
+                                    isFavorite: isFavorite
+                                        ? CharacterFavoriteType.favorite
+                                        : CharacterFavoriteType.unfavorite,
+                                    isReported: CharacterReportType.none,
+                                    onTap: () {
+                                      AppRouter.Router.fluroRouter.navigateTo(
+                                          context, Routes.character.toString(),
+                                          routeSettings: RouteSettings(
+                                              arguments: character),
+                                          transition:
+                                              TransitionType.inFromRight);
+                                    });
+                              },
+                            ),
+                            if (characterStore.requestStateGet.loading)
+                              Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: Center(
+                                    child: Lottie.asset(
+                                      loadingAnimation,
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ))
+                          ],
+                        ),
+            ))
           ]),
         ));
   }
