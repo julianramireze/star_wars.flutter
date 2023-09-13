@@ -11,7 +11,7 @@ VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) => VehicleModel()
   ..model = json['model'] as String
   ..manufacturer = json['manufacturer'] as String
   ..costInCredits = const JsonStringToInt().fromJson(json['cost_in_credits'])
-  ..length = (json['length'] as num).toDouble()
+  ..length = const JsonStringToDouble().fromJson(json['length'])
   ..maxAtmospheringSpeed =
       const JsonStringToInt().fromJson(json['max_atmosphering_speed'])
   ..cargoCapacity = const JsonStringToInt().fromJson(json['cargo_capacity'])
@@ -26,7 +26,7 @@ Map<String, dynamic> _$VehicleModelToJson(VehicleModel instance) =>
       'model': instance.model,
       'manufacturer': instance.manufacturer,
       'cost_in_credits': const JsonStringToInt().toJson(instance.costInCredits),
-      'length': instance.length,
+      'length': const JsonStringToDouble().toJson(instance.length),
       'max_atmosphering_speed':
           const JsonStringToInt().toJson(instance.maxAtmospheringSpeed),
       'cargo_capacity': const JsonStringToInt().toJson(instance.cargoCapacity),

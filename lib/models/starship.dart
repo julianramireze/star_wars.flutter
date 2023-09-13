@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:star_wars/utils/helpers/JsonSerializable/JsonStringToDouble.dart';
 import 'package:star_wars/utils/helpers/JsonSerializable/JsonStringToInt.dart';
 part 'starship.g.dart';
 
 @JsonSerializable()
 @JsonStringToInt()
+@JsonStringToDouble()
 class StarShipModel {
   @JsonKey(name: 'name')
   late String name;

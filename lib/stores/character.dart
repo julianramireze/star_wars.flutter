@@ -18,7 +18,8 @@ class CharacterStore extends ChangeNotifier {
             .get(LocalStoreType.charactersDefault.toString()) ??
         [];
     if (charactersDefault.runtimeType == String) {
-      setCharacters(jsonDecode(charactersDefault)
+      setCharacters(json
+          .decode(charactersDefault)
           .map<CharacterModel>(
               (character) => CharacterModel.fromJson(character))
           .toList());
@@ -27,7 +28,8 @@ class CharacterStore extends ChangeNotifier {
             .get(LocalStoreType.charactersFavorites.toString()) ??
         [];
     if (charactersFavorites.runtimeType == String) {
-      setCharactersFavorites(jsonDecode(charactersFavorites)
+      setCharactersFavorites(json
+          .decode(charactersFavorites)
           .map<CharacterModel>(
               (character) => CharacterModel.fromJson(character))
           .toList());
@@ -36,7 +38,8 @@ class CharacterStore extends ChangeNotifier {
             .get(LocalStoreType.charactersReported.toString()) ??
         [];
     if (charactersReported.runtimeType == String) {
-      setCharactersReported(jsonDecode(charactersReported)
+      setCharactersReported(json
+          .decode(charactersReported)
           .map<CharacterModel>(
               (character) => CharacterModel.fromJson(character))
           .toList());

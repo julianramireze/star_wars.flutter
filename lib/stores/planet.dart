@@ -16,7 +16,8 @@ class PlanetStore extends ChangeNotifier {
             .get(LocalStoreType.planetsDefault.toString()) ??
         [];
     if (planets.runtimeType == String) {
-      setPlanets(jsonDecode(planets)
+      setPlanets(json
+          .decode(planets)
           .map<PlanetModel>((planet) => PlanetModel.fromJson(planet))
           .toList());
     }

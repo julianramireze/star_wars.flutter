@@ -12,9 +12,13 @@ import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
 import 'package:star_wars/models/planet.dart';
+import 'package:star_wars/models/starship.dart';
+import 'package:star_wars/models/vehicle.dart';
 import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
+import 'package:star_wars/stores/starship.dart';
+import 'package:star_wars/stores/vehicle.dart';
 import 'package:star_wars/utils/helpers/hooks.dart';
 import 'package:star_wars/utils/helpers/regex.dart';
 import 'package:star_wars/utils/helpers/request_state.dart';
@@ -23,6 +27,7 @@ import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/widgets/custom_toast.dart';
+import 'package:star_wars/widgets/ship.dart';
 import 'package:star_wars/widgets/stability_ai_image.dart';
 
 class CharacterScreen extends HookWidget {
@@ -30,8 +35,45 @@ class CharacterScreen extends HookWidget {
 
   const CharacterScreen({Key? key, required this.character}) : super(key: key);
 
+  Widget getVehiclesAndStarShipsWidget(
+      List<VehicleModel> vehicle, List<StarShipModel> starShips) {
+    List<Widget> ships = [];
+
+    for (VehicleModel vehicleItem in vehicle) {
+      ships.add(Container(
+        margin: const EdgeInsets.only(bottom: 30),
+        child: Ship(
+          name: vehicleItem.name,
+          capacity: vehicleItem.cargoCapacity,
+          speed: vehicleItem.maxAtmospheringSpeed,
+          cost: vehicleItem.costInCredits,
+          type: ShipType.vehicle,
+        ),
+      ));
+    }
+
+    for (StarShipModel starShip in starShips) {
+      ships.add(Container(
+        margin: const EdgeInsets.only(bottom: 30),
+        child: Ship(
+          name: starShip.name,
+          capacity: starShip.cargoCapacity,
+          speed: starShip.maxAtmospheringSpeed,
+          cost: starShip.costInCredits,
+          type: ShipType.starship,
+        ),
+      ));
+    }
+
+    return Column(
+      children: ships,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final vehicleStore = Provider.of<VehicleStore>(context);
+    final starShipStore = Provider.of<StarShipStore>(context);
     final planetStore = Provider.of<PlanetStore>(context);
     final characterStore = Provider.of<CharacterStore>(context);
     final settingsStore = Provider.of<SettingsStore>(context);
@@ -42,6 +84,8 @@ class CharacterScreen extends HookWidget {
     final gender =
         Gender.StringToGender(character.gender, settingsStore.darkMode);
     final planet = useState({});
+    final vehicles = useState<List<VehicleModel>>([]);
+    final starShips = useState<List<StarShipModel>>([]);
     final translations = useState({
       "hair_color": character.hairColor,
       "eye_color": character.eyeColor,
@@ -55,6 +99,21 @@ class CharacterScreen extends HookWidget {
     useAsyncEffect(() {
       final homeWorldID = Regex.getID(character.homeWorld);
       if (homeWorldID != null) planetStore.getByID(homeWorldID);
+
+      character.starShips.forEach((starShip) {
+        final starShipID = Regex.getID(starShip);
+        if (starShipID != null) {
+          starShipStore.getByID(starShipID);
+        }
+      });
+
+      character.vehicles.forEach((vehicle) {
+        final vehicleID = Regex.getID(vehicle);
+        if (vehicleID != null) {
+          vehicleStore.getByID(vehicleID);
+        }
+      });
+
       (() async {
         Map<String, String> newTranslations = {};
 
@@ -88,6 +147,28 @@ class CharacterScreen extends HookWidget {
 
       planetStore.requestStateGetByID.clear();
     }, () {}, [planetStore.requestStateGetByID.success]);
+
+    useAsyncEffect(() {
+      if (vehicleStore.vehicles.isNotEmpty) {
+        vehicles.value = vehicleStore.vehicles
+            .where((vehicle) => character.vehicles.any((characterVehicle) =>
+                Regex.getID(characterVehicle) == Regex.getID(vehicle.url)))
+            .toList();
+      }
+
+      vehicleStore.requestStateGetByID.clear();
+    }, () {}, [vehicleStore.requestStateGetByID.success]);
+
+    useAsyncEffect(() {
+      if (starShipStore.starShips.isNotEmpty) {
+        starShips.value = starShipStore.starShips
+            .where((starShip) => character.starShips.any((characterStarShip) =>
+                Regex.getID(characterStarShip) == Regex.getID(starShip.url)))
+            .toList();
+      }
+
+      starShipStore.requestStateGetByID.clear();
+    }, () {}, [starShipStore.requestStateGetByID.success]);
 
     useAsyncEffect(() {
       if (characterStore.requestStateReport.success !=
@@ -270,6 +351,7 @@ class CharacterScreen extends HookWidget {
                         ),
                         Expanded(
                             child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: Container(
                               margin:
                                   const EdgeInsets.only(left: 25, right: 25),
@@ -471,6 +553,11 @@ class CharacterScreen extends HookWidget {
                                       ),
                                     ],
                                   ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 40),
+                                  child: getVehiclesAndStarShipsWidget(
+                                      vehicles.value, starShips.value),
                                 ),
                               ])),
                         )),
