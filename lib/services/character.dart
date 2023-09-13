@@ -10,14 +10,16 @@ class CharacterService {
 
   static Future<Response<dynamic>> report(
       int id, String dateTime, String characterName) {
-    final formattedApi = api;
-    formattedApi.options.headers['Content-Type'] = 'application/json';
-
     return api.post('${Api.baseUrlJsonPlaceholder}posts',
         data: json.encode({
           "userId": id,
           "dateTime": dateTime,
           "characterName": characterName
-        }).toString());
+        }).toString(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ));
   }
 }

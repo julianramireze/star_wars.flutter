@@ -15,12 +15,6 @@ class StabilityAIService {
       int samples = 1,
       int steps = 30,
       Function(int, int)? onReceiveProgress}) async {
-    final formattedApi = api;
-    formattedApi.options.headers['Content-Type'] = 'application/json';
-    formattedApi.options.headers['Accept'] = 'image/png';
-    formattedApi.options.headers['Authorization'] =
-        'Bearer ${Config.Key.stabilityAIKey}';
-
     return api.post(
         "${Api.baseUrlStabilityAI}${Api.endpointGenerationStabilityAI}stable-diffusion-xl-1024-v1-0/text-to-image",
         data: json.encode({
@@ -33,9 +27,11 @@ class StabilityAIService {
           "samples": samples,
           "steps": steps
         }),
-        options: Options(
-          responseType: ResponseType.bytes,
-        ),
+        options: Options(responseType: ResponseType.bytes, headers: {
+          "Content-Type": "application/json",
+          "Accept": "image/png",
+          "Authorization": "Bearer ${Config.Key.stabilityAIKey}"
+        }),
         onReceiveProgress: onReceiveProgress);
   }
 }
