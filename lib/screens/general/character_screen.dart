@@ -303,7 +303,7 @@ class CharacterScreen extends HookWidget {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .onBackground,
+                                                      .onSurface,
                                                   fontSize: 14,
                                                   fontWeight:
                                                       FontWeight.normal),
@@ -333,7 +333,7 @@ class CharacterScreen extends HookWidget {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .onBackground,
+                                                      .onSurface,
                                                   fontSize: 14,
                                                   fontWeight:
                                                       FontWeight.normal),
@@ -371,7 +371,7 @@ class CharacterScreen extends HookWidget {
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onBackground,
+                                                    .onSurface,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
@@ -400,7 +400,7 @@ class CharacterScreen extends HookWidget {
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onBackground,
+                                                    .onSurface,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
@@ -463,7 +463,7 @@ class CharacterScreen extends HookWidget {
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .onBackground,
+                                                    .onSurface,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.normal),
                                           ),
