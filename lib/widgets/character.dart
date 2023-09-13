@@ -199,6 +199,7 @@ class Character extends HookWidget {
                 ),
                 if (isReported != CharacterReportType.none)
                   CustomButton(
+                      enabled: settingsStore.connectionEnabled,
                       showInk: false,
                       padding: const EdgeInsets.all(0),
                       onTap: () {
@@ -208,7 +209,8 @@ class Character extends HookWidget {
                           characterStore.addCharacterReported(character);
                         }
                       },
-                      child: isReported == CharacterReportType.report
+                      child: isReported == CharacterReportType.report &&
+                              settingsStore.connectionEnabled
                           ? const Icon(
                               Icons.report_problem_rounded,
                               color: Colors.orangeAccent,
@@ -216,7 +218,7 @@ class Character extends HookWidget {
                             )
                           : const Icon(
                               Icons.report_problem_rounded,
-                              color: Colors.orangeAccent,
+                              color: AppColors.Colors.gray,
                               size: 25,
                             )),
                 if (isFavorite != CharacterFavoriteType.none)
