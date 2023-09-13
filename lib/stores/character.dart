@@ -144,7 +144,7 @@ class CharacterStore extends ChangeNotifier {
       if (await InternetConnectionChecker().hasConnection) {
         requestStateGet.setError(error.response?.statusCode as int);
       } else {
-        requestStateReport.setError(RequestStateErrorType.noInternet);
+        requestStateGet.setError(RequestStateErrorType.noInternet);
       }
     }
 

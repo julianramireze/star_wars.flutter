@@ -13,6 +13,7 @@ import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/utils/helpers/hooks.dart' as CustomHooks;
+import 'package:star_wars/utils/helpers/request_state.dart';
 import 'package:star_wars/widgets/character.dart';
 import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
@@ -72,6 +73,7 @@ class HomeScreen extends HookWidget {
                   Stack(
                     children: [
                       CustomInput(
+                        enabled: characterStore.characters.isNotEmpty,
                         height: 40,
                         focusNode: focusNode,
                         hideErrorOnFalse: true,
@@ -117,33 +119,82 @@ class HomeScreen extends HookWidget {
                             height: 50,
                             fit: BoxFit.fill,
                           ))
-                        : ListView.builder(
-                            physics: BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: charactersFiltered.value.length,
-                            itemBuilder: (context, index) {
-                              CharacterModel character =
-                                  charactersFiltered.value[index];
-                              final isFavorite = characterStore
-                                  .charactersFavorites
-                                  .any((characterFavorite) =>
-                                      characterFavorite.name == character.name);
+                        : characterStore.characters.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        tr(characterStore
+                                                    .requestStateGet.error ==
+                                                RequestStateErrorType.noInternet
+                                            ? "check_internet"
+                                            : "try_later"),
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal)),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20),
+                                      child: CustomButton(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            bottom: 10,
+                                            left: 20,
+                                            right: 20),
+                                        borderRadius: BorderRadius.circular(50),
+                                        onTap: () {
+                                          characterStore.get(page.value);
+                                        },
+                                        child: Text(tr("retry"),
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal)),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                physics: BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                itemCount: charactersFiltered.value.length,
+                                itemBuilder: (context, index) {
+                                  CharacterModel character =
+                                      charactersFiltered.value[index];
+                                  final isFavorite = characterStore
+                                      .charactersFavorites
+                                      .any((characterFavorite) =>
+                                          characterFavorite.name ==
+                                          character.name);
 
-                              return Character(
-                                  character: character,
-                                  isFavorite: isFavorite
-                                      ? CharacterFavoriteType.favorite
-                                      : CharacterFavoriteType.unfavorite,
-                                  isReported: CharacterReportType.none,
-                                  onTap: () {
-                                    AppRouter.Router.fluroRouter.navigateTo(
-                                        context, Routes.character.toString(),
-                                        routeSettings:
-                                            RouteSettings(arguments: character),
-                                        transition: TransitionType.inFromRight);
-                                  });
-                            },
-                          )))
+                                  return Character(
+                                      character: character,
+                                      isFavorite: isFavorite
+                                          ? CharacterFavoriteType.favorite
+                                          : CharacterFavoriteType.unfavorite,
+                                      isReported: CharacterReportType.none,
+                                      onTap: () {
+                                        AppRouter.Router.fluroRouter.navigateTo(
+                                            context,
+                                            Routes.character.toString(),
+                                            routeSettings: RouteSettings(
+                                                arguments: character),
+                                            transition:
+                                                TransitionType.inFromRight);
+                                      });
+                                },
+                              )))
           ]),
         ));
   }
