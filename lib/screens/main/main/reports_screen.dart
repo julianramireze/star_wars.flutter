@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/stores/character.dart';
 import 'package:star_wars/widgets/character.dart';
@@ -11,6 +13,7 @@ import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/widgets/custom_input.dart';
 import 'package:star_wars/utils/helpers/hooks.dart' as CustomHooks;
+import 'package:star_wars/config/router.dart' as AppRouter;
 
 class ReportsScreen extends HookWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -40,10 +43,16 @@ class ReportsScreen extends HookWidget {
                         CharacterModel character =
                             characterStore.charactersReported[index];
                         return Character(
-                          character: character,
-                          isFavorite: CharacterFavoriteType.none,
-                          isReported: CharacterReportType.report,
-                        );
+                            character: character,
+                            isFavorite: CharacterFavoriteType.none,
+                            isReported: CharacterReportType.report,
+                            onTap: () {
+                              AppRouter.Router.fluroRouter.navigateTo(
+                                  context, Routes.character.toString(),
+                                  routeSettings:
+                                      RouteSettings(arguments: character),
+                                  transition: TransitionType.inFromRight);
+                            });
                       },
                     )))
           ]),
