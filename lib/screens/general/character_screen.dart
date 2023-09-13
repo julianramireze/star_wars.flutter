@@ -254,8 +254,10 @@ class CharacterScreen extends HookWidget {
                               child: StabilityAiImage(
                                 width: 145,
                                 height: 145,
-                                prompt:
-                                    Prompts.character(character.name, 'desert'),
+                                prompt: planet.value.keys.isNotEmpty
+                                    ? Prompts.character(
+                                        character.name, planet.value['terrain'])
+                                    : "",
                                 name: character.name,
                                 isCircle: true,
                                 loadingColors: [

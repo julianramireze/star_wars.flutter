@@ -7,7 +7,10 @@ import 'package:star_wars/constants/prompts.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/stores/character.dart';
+import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
+import 'package:star_wars/utils/helpers/hooks.dart';
+import 'package:star_wars/utils/helpers/regex.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/config/router.dart' as AppRouter;
@@ -71,11 +74,29 @@ class Character extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final planetStore = Provider.of<PlanetStore>(context);
     final settingsStore = Provider.of<SettingsStore>(context);
     final characterStore = Provider.of<CharacterStore>(context);
 
+    final planet = useState({});
     Gender gender =
         Gender.StringToGender(character.gender, settingsStore.darkMode);
+
+    useAsyncEffect(() {
+      final homeWorldID = Regex.getID(character.homeWorld);
+      if (homeWorldID != null) planetStore.getByID(homeWorldID);
+    }, () {}, []);
+
+    useAsyncEffect(() {
+      if (planetStore.planets.isNotEmpty) {
+        planet.value = planetStore.planets
+            .firstWhere((planet) =>
+                Regex.getID(planet.url) == Regex.getID(character.homeWorld))
+            .toJson();
+      }
+
+      planetStore.requestStateGetByID.clear();
+    }, () {}, [planetStore.requestStateGetByID.success]);
 
     return CustomButton(
         borderRadius: BorderRadius.circular(5),
@@ -95,7 +116,10 @@ class Character extends HookWidget {
                     width: 60,
                     height: 60,
                     child: StabilityAiImage(
-                      prompt: Prompts.character(character.name, 'desert'),
+                      prompt: planet.value.keys.isNotEmpty
+                          ? Prompts.character(
+                              character.name, planet.value['terrain'])
+                          : '',
                       name: character.name,
                       isCircle: true,
                       loadingColors: [
