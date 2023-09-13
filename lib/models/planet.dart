@@ -23,6 +23,9 @@ class PlanetModel {
   @JsonKey(name: 'terrain')
   late String terrain;
 
+  @JsonKey(name: 'url')
+  late String url;
+
   @JsonKey(name: 'created')
   late DateTime created;
 

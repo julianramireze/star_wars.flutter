@@ -16,6 +16,7 @@ VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) => VehicleModel()
       const JsonStringToInt().fromJson(json['max_atmosphering_speed'])
   ..cargoCapacity = const JsonStringToInt().fromJson(json['cargo_capacity'])
   ..vehicleClass = json['vehicle_class'] as String
+  ..url = json['url'] as String
   ..created = DateTime.parse(json['created'] as String)
   ..edited = DateTime.parse(json['edited'] as String);
 
@@ -30,6 +31,7 @@ Map<String, dynamic> _$VehicleModelToJson(VehicleModel instance) =>
           const JsonStringToInt().toJson(instance.maxAtmospheringSpeed),
       'cargo_capacity': const JsonStringToInt().toJson(instance.cargoCapacity),
       'vehicle_class': instance.vehicleClass,
+      'url': instance.url,
       'created': instance.created.toIso8601String(),
       'edited': instance.edited.toIso8601String(),
     };

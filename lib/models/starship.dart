@@ -29,6 +29,9 @@ class StarShipModel {
   @JsonKey(name: 'starship_class')
   late String starshipClass;
 
+  @JsonKey(name: 'url')
+  late String url;
+
   @JsonKey(name: 'created')
   late DateTime created;
 

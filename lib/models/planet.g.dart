@@ -13,6 +13,7 @@ PlanetModel _$PlanetModelFromJson(Map<String, dynamic> json) => PlanetModel()
   ..diameter = const JsonStringToInt().fromJson(json['diameter'])
   ..climate = json['climate'] as String
   ..terrain = json['terrain'] as String
+  ..url = json['url'] as String
   ..created = DateTime.parse(json['created'] as String)
   ..edited = DateTime.parse(json['edited'] as String);
 
@@ -25,6 +26,7 @@ Map<String, dynamic> _$PlanetModelToJson(PlanetModel instance) =>
       'diameter': const JsonStringToInt().toJson(instance.diameter),
       'climate': instance.climate,
       'terrain': instance.terrain,
+      'url': instance.url,
       'created': instance.created.toIso8601String(),
       'edited': instance.edited.toIso8601String(),
     };

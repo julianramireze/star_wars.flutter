@@ -29,6 +29,9 @@ class VehicleModel {
   @JsonKey(name: 'vehicle_class')
   late String vehicleClass;
 
+  @JsonKey(name: 'url')
+  late String url;
+
   @JsonKey(name: 'created')
   late DateTime created;
 
