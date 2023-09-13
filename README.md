@@ -27,6 +27,5 @@ The PDF file with the extra documentation is in the documentation folder of the 
 
 ## Commands
 - flutter pub get - Get the dependencies.
-- flutter test - Run the tests.
 - flutter emulators - List all available emulators.
 - flutter run -d <device> - Run the app in the specified device.
