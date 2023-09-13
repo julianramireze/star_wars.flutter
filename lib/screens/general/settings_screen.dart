@@ -195,7 +195,7 @@ class SettingsScreen extends HookWidget {
                                                           .onSurface,
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w200)))
+                                                          FontWeight.w400)))
                                         ],
                                       ),
                                       setting.type == SettingType.switcher
@@ -254,7 +254,7 @@ class SettingsScreen extends HookWidget {
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontWeight: FontWeight.w200)),
+                              fontWeight: FontWeight.w400)),
                     )
                   ],
                 ))));

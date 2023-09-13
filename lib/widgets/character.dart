@@ -119,7 +119,7 @@ class Character extends HookWidget {
                           style: TextStyle(
                               color: gender.color,
                               fontSize: 13,
-                              fontWeight: FontWeight.w200))
+                              fontWeight: FontWeight.w400))
                     ],
                   ),
                 )
