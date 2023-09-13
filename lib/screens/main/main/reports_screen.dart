@@ -20,7 +20,7 @@ class ReportsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomHooks.useAutomaticKeepAlive(wantKeepAlive: true);
+    useAutomaticKeepAlive(wantKeepAlive: true);
     final characterStore = Provider.of<CharacterStore>(context);
 
     return CustomButton(

@@ -13,7 +13,7 @@ import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/services/api.dart';
 import 'package:star_wars/stores/character.dart';
-import 'package:star_wars/utils/helpers/hooks.dart' as CustomHooks;
+import 'package:star_wars/utils/helpers/hooks.dart';
 import 'package:star_wars/utils/helpers/request_state.dart';
 import 'package:star_wars/widgets/character.dart';
 import 'package:star_wars/widgets/custom_boxhsadow.dart';
@@ -28,7 +28,7 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomHooks.useAutomaticKeepAlive(wantKeepAlive: true);
+    useAutomaticKeepAlive(wantKeepAlive: true);
     final scrollController = useScrollController();
     final focusNode = useFocusNode();
     final characterStore = Provider.of<CharacterStore>(context);
@@ -36,7 +36,7 @@ class HomeScreen extends HookWidget {
     final page = useState(1);
     final charactersFiltered = useState([]);
 
-    CustomHooks.useAsyncEffect(() {
+    useAsyncEffect(() {
       characterStore.get(page.value);
 
       scrollController.addListener(() {
@@ -53,7 +53,7 @@ class HomeScreen extends HookWidget {
       return;
     }, () {}, []);
 
-    CustomHooks.useAsyncEffect(() {
+    useAsyncEffect(() {
       page.value = characterStore.characters.length ~/ 10;
       if (searchText.value != "") {
         charactersFiltered.value = characterStore.characters
