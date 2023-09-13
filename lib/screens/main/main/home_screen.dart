@@ -64,13 +64,22 @@ class HomeScreen extends HookWidget {
       } else {
         charactersFiltered.value = characterStore.characters;
       }
-
-      characterStore.requestStateGet.clear();
     }, () {}, [
       characterStore.characters,
       characterStore.charactersFavorites,
       characterStore.charactersReported,
       searchText.value
+    ]);
+
+    useAsyncEffect(() {
+      if (characterStore.requestStateGet.error != RequestStateErrorType.none ||
+          characterStore.requestStateGet.success !=
+              RequestStateSuccessType.none) {
+        characterStore.requestStateGet.clear();
+      }
+    }, () {}, [
+      characterStore.requestStateGet.error,
+      characterStore.requestStateGet.success
     ]);
 
     return CustomButton(
