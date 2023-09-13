@@ -43,7 +43,7 @@ class StabilityAiImage extends HookWidget {
     final errorImage = useState(false);
 
     useEffect(() {
-      if (imageFile.value.isEmpty) {
+      if (imageFile.value.isEmpty && prompt.isNotEmpty && name.isNotEmpty) {
         loadingImage.value = true;
         errorImage.value = false;
         imageFile.value = "";
@@ -88,7 +88,7 @@ class StabilityAiImage extends HookWidget {
       }
 
       return;
-    }, [retryImage.value]);
+    }, [name, prompt, retryImage.value]);
 
     return CustomButton(
       borderRadius:
