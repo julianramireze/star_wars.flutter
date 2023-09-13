@@ -74,6 +74,7 @@ class Character extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMounted = useIsMounted();
     final planetStore = Provider.of<PlanetStore>(context);
     final settingsStore = Provider.of<SettingsStore>(context);
     final characterStore = Provider.of<CharacterStore>(context);
@@ -88,7 +89,7 @@ class Character extends HookWidget {
     }, () {}, []);
 
     useAsyncEffect(() {
-      if (planetStore.planets.isNotEmpty) {
+      if (planetStore.planets.isNotEmpty && isMounted()) {
         planet.value = planetStore.planets
             .firstWhere((planet) =>
                 Regex.getID(planet.url) == Regex.getID(character.homeWorld))

@@ -39,6 +39,7 @@ class StabilityAiImage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMounted = useIsMounted();
     final controller = useAnimationController(
         duration: Duration(milliseconds: 900), initialValue: 0);
     final colorAnimation = useMemoized(() =>
@@ -68,7 +69,9 @@ class StabilityAiImage extends HookWidget {
             final hash = name.toLowerCase().trim().hashCode;
             final file = File("${tempDirectory.path}/images/$hash.png");
             if (file.existsSync()) {
-              imageFile.value = file.path;
+              if (isMounted()) {
+                imageFile.value = file.path;
+              }
             } else {
               try {
                 Response response =
@@ -85,17 +88,23 @@ class StabilityAiImage extends HookWidget {
                   final bytes = response.data;
                   await file.create(recursive: true);
                   await file.writeAsBytes(bytes);
-                  imageFile.value = file.path;
+                  if (isMounted()) {
+                    imageFile.value = file.path;
+                  }
                 }
               } on DioError catch (error) {
                 if (kDebugMode) {
                   print(error);
                 }
 
-                errorImage.value = true;
+                if (isMounted()) {
+                  errorImage.value = true;
+                }
               }
             }
-            loadingImage.value = false;
+            if (isMounted()) {
+              loadingImage.value = false;
+            }
           }
         }());
       }

@@ -72,6 +72,7 @@ class CharacterScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMounted = useIsMounted();
     final vehicleStore = Provider.of<VehicleStore>(context);
     final starShipStore = Provider.of<StarShipStore>(context);
     final planetStore = Provider.of<PlanetStore>(context);
@@ -119,21 +120,25 @@ class CharacterScreen extends HookWidget {
 
         for (String translationKey in translations.value.keys) {
           final translationItem = translations.value[translationKey] ?? "";
-          List<dynamic>? AzureTranslation = await MicrosoftAzureTranslator
-              .instance
-              .translate(translationItem, "en", context.locale.languageCode);
+          List<dynamic>? azureTranslation;
 
-          if (AzureTranslation != null && AzureTranslation.isNotEmpty) {
+          if (isMounted()) {
+            azureTranslation = await MicrosoftAzureTranslator.instance
+                .translate(translationItem, "en", context.locale.languageCode);
+          }
+          if (azureTranslation != null && azureTranslation.isNotEmpty) {
             newTranslations[translationKey] =
-                AzureTranslation[0]['text'].substring(0, 1).toUpperCase() +
-                    AzureTranslation[0]['text'].substring(1);
+                azureTranslation[0]['text'].substring(0, 1).toUpperCase() +
+                    azureTranslation[0]['text'].substring(1);
           } else {
             newTranslations[translationKey] = translationItem.toUpperCase() +
                 translationItem.substring(1).toLowerCase();
           }
         }
 
-        translations.value = newTranslations;
+        if (isMounted()) {
+          translations.value = newTranslations;
+        }
       })();
     }, () {}, []);
 
