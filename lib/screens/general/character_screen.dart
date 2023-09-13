@@ -6,18 +6,24 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:microsoft_azure_translator/microsoft_azure_translator.dart';
 import 'package:provider/provider.dart';
 import 'package:star_wars/config/api.dart';
+import 'package:star_wars/config/url.dart';
+import 'package:star_wars/constants/prompts.dart';
 import 'package:star_wars/constants/routes.dart';
 import 'package:star_wars/models/character.dart';
 import 'package:star_wars/config/router.dart' as AppRouter;
+import 'package:star_wars/models/planet.dart';
 import 'package:star_wars/stores/character.dart';
+import 'package:star_wars/stores/planet.dart';
 import 'package:star_wars/stores/settings.dart';
 import 'package:star_wars/utils/helpers/hooks.dart';
+import 'package:star_wars/utils/helpers/regex.dart';
 import 'package:star_wars/utils/helpers/request_state.dart';
 import 'package:star_wars/widgets/character.dart';
 import 'package:star_wars/widgets/custom_boxhsadow.dart';
 import 'package:star_wars/widgets/custom_button.dart';
 import 'package:star_wars/constants/colors.dart' as AppColors;
 import 'package:star_wars/widgets/custom_toast.dart';
+import 'package:star_wars/widgets/stability_ai_image.dart';
 
 class CharacterScreen extends HookWidget {
   final CharacterModel character;
@@ -26,6 +32,7 @@ class CharacterScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final planetStore = Provider.of<PlanetStore>(context);
     final characterStore = Provider.of<CharacterStore>(context);
     final settingsStore = Provider.of<SettingsStore>(context);
     final isFavorite = characterStore.charactersFavorites
@@ -34,6 +41,7 @@ class CharacterScreen extends HookWidget {
         .any((characterReported) => characterReported.name == character.name);
     final gender =
         Gender.StringToGender(character.gender, settingsStore.darkMode);
+    final planet = useState({});
     final translations = useState({
       "hair_color": character.hairColor,
       "eye_color": character.eyeColor,
@@ -45,6 +53,8 @@ class CharacterScreen extends HookWidget {
     }
 
     useAsyncEffect(() {
+      final homeWorldID = Regex.getID(character.homeWorld);
+      if (homeWorldID != null) planetStore.getByID(homeWorldID);
       (() async {
         Map<String, String> newTranslations = {};
 
@@ -67,6 +77,17 @@ class CharacterScreen extends HookWidget {
         translations.value = newTranslations;
       })();
     }, () {}, []);
+
+    useAsyncEffect(() {
+      if (planetStore.planets.isNotEmpty) {
+        planet.value = planetStore.planets
+            .firstWhere((planet) =>
+                Regex.getID(planet.url) == Regex.getID(character.homeWorld))
+            .toJson();
+      }
+
+      planetStore.requestStateGetByID.clear();
+    }, () {}, [planetStore.requestStateGetByID.success]);
 
     useAsyncEffect(() {
       if (characterStore.requestStateReport.success !=
@@ -167,8 +188,8 @@ class CharacterScreen extends HookWidget {
                                                 TransitionType.inFromRight,
                                             routeSettings:
                                                 RouteSettings(arguments: {
-                                              "url":
-                                                  "${Api.getServerGoogle}search?q=${Uri.encodeComponent("${character.name} star wars")}",
+                                              "url": Url.webViewGoogleSearch(
+                                                  character.name),
                                               "title": tr("more_information")
                                             }));
                                       },
@@ -193,57 +214,54 @@ class CharacterScreen extends HookWidget {
                         Stack(
                           alignment: Alignment.topCenter,
                           children: [
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(top: 30, bottom: 30),
-                              width: 145,
-                              height: 145,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
-                                  "character.image",
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return Container(
-                                      width: 135,
-                                      height: 135,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.2),
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.person,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          size: 50,
-                                        ),
-                                      ),
-                                    );
-                                  },
+                            StabilityAiImage(
+                              width: MediaQuery.of(context).size.width,
+                              height: 102.5,
+                              prompt: planet.value.keys.isNotEmpty
+                                  ? Prompts.planet(planet.value['terrain'],
+                                      planet.value['climate'])
+                                  : "",
+                              name: planet.value.entries.isNotEmpty
+                                  ? planet.value["name"]
+                                  : "",
+                              colorError:
+                                  AppColors.Colors.grayDark.withOpacity(0.9),
+                              loadingColors: [
+                                AppColors.Colors.gray,
+                                AppColors.Colors.grayDark.withOpacity(0.9)
+                              ],
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(top: 10, right: 10),
+                                child: Text(
+                                  planet.value["name"] ?? "",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 102.5,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .secondary
-                                    .withOpacity(0.2),
+                              margin:
+                                  const EdgeInsets.only(top: 30, bottom: 30),
+                              child: StabilityAiImage(
+                                width: 145,
+                                height: 145,
+                                prompt:
+                                    Prompts.character(character.name, 'desert'),
+                                name: character.name,
+                                isCircle: true,
+                                loadingColors: [
+                                  AppColors.Colors.gray,
+                                  AppColors.Colors.grayDark
+                                ],
                               ),
                             ),
                           ],
