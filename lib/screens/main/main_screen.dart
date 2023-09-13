@@ -70,8 +70,9 @@ class MainScreen extends HookWidget {
                           _tabs[tabIndex.value].title.isNotEmpty
                               ? Text(
                                   _tabs[tabController.index].title,
-                                  style: const TextStyle(
-                                      color: Colors.white,
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.surface,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 )
